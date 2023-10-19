@@ -1,0 +1,36 @@
+@import './base.css';
+
+@import url('https://fonts.googleapis.com/css2?family=Gabarito:wght@400;600;800&display=swap');
+
+
+
+body {
+    font-family: 'Gabarito', sans-serif;
+    background: linear-gradient(354deg, #000000, #781a1a);
+    background-size: 400% 400%;
+
+    -moz-animation: Backgroundanimation 53s ease infinite;
+    -o-animation: Backgroundanimation 53s ease infinite;
+    animation: Backgroundanimation 53s ease infinite;
+}
+
+@-moz-keyframes Backgroundanimation {
+    0%{background-position:56% 0%}
+    50%{background-position:45% 100%}
+    100%{background-position:56% 0%}
+}
+@-o-keyframes Backgroundanimation {
+    0%{background-position:56% 0%} 
+    50%{background-position:45% 100%}
+    100%{background-position:56% 0%}
+}
+@keyframes Backgroundanimation {
+    0%{background-position:56% 0%}
+    50%{background-position:45% 100%}
+    100%{background-position:56% 0%}
+}
+
+
+
+
+ 
