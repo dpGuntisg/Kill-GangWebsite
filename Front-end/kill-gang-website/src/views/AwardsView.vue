@@ -60,7 +60,7 @@
     text-align: left;
     max-width: 50vw;
     padding: 0 20px;
-    height: 100%;
+    height: 100vh;
   }
 }
 

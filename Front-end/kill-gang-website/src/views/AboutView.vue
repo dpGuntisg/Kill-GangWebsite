@@ -73,12 +73,12 @@
           {
             name:'Jonka',
             description: 'Jonka, a member of the infamous Kill Gang, a complex individual whose life was marked by a series of destructive habits. His story was one of addiction, both to gambling and alcohol, leading him down a perilous path. Despite the darkness that loomed over him, he was also known for his lighthearted and silly demeanor, earning him the nickname "silly goose" among his associates.  His lyrical prowess, despite its absurd and playful nature, was undeniable, earning him a peculiar kind of respect among his peers.',
-            image: '/assets/Jekabs.jpg'
+            image: '/assets/Jekabs.png'
           },
           {
             name:'Cake Henrijs Apaļais',
             description: 'Cakes, a member of Kill Gang, led an unconventional life. Living in a basement on a farm, they found solace in online gaming, particularly League of Legends. Despite their gaming prowess, Cakes struggled with online school, facing challenges that led to academic setbacks. Their unique lifestyle reflected a blend of digital escapism and real-world struggles, making them a distinctive character within the gang.',
-            image: '/assets/image0.gif'
+            image: '/assets/Henrijs.png'
           },
           {
             name:'who else',
