@@ -3,7 +3,7 @@
 
   <div class="container">
     <div class="Video-box">
-      <VideoPlayer />
+      <VideoPlayer class="VideoPlayer"/>
       <div class="comment-section"> </div>
     </div>
     <div class="Song-Box">
@@ -35,6 +35,12 @@ export default {
   margin-right: auto;
 }
 
+.VideoPlayer{
+
+  margin-left: 30%;
+  width: 200px;
+  height: 200px;
+}
 
 
 </style>
