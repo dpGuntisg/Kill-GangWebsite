@@ -25,7 +25,7 @@ export default {
   },
   data() {
     return {
-      youtubeVideoUrl: 'https://www.youtube.com/embed/bTqVqk7FSmY?amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1', // YouTube video URL
+      youtubeVideoUrl: 'https://www.youtube.com/watch?v=iBxRQ5dqVTA&list=PLKfW-GqEVgY3dH1JxVPGJKxRxkia-OCDI&index=201&ab_channel=ICETEA', 
       options: {
 
       },
