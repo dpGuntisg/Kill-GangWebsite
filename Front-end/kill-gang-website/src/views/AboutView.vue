@@ -1,22 +1,24 @@
 <template>
   <navbar></navbar>
     <div class="text-div">
-      <h1 class="kill-gang">KILL GANG</h1>
-      <p>At Kill Gang, we're passionate about a diverse range of interests that bring together the best of the digital age.
-         Our organization is committed to fostering creativity, entertainment, and innovation across various domains, making us a dynamic force in the modern world.</p>
-      <p class="interests">Our Interests:</p>
-      <ul>
-        <li class="list"> <strong>E-Sports:</strong> We are avid supporters of the e-sports industry, where gamers showcase their skills and compete at the highest level. 
-          We believe in the power of competitive gaming to build communities, connect people, and drive the evolution of digital sports. </li>
-        <li class="list"><strong>Music Creation:</strong> Music is the universal language that transcends borders and cultures. We celebrate the art of music creation,
-             offering platforms and resources to help aspiring musicians realize their dreams and connect with audiences worldwide.</li>
-        <li class="list"><strong>Content Creation:</strong> In an era of digital storytelling, content creation is at the heart of our organization. 
-          We empower content creators across various platforms to express themselves, share their passions, and engage with audiences through captivating content.</li>
-        <li class="list"><strong>Gambling:</strong> We acknowledge the excitement and thrill that gambling brings to the lives of many.
-             Our responsible gambling initiatives promote a safe and enjoyable environment for those who choose to engage in this form of entertainment.</li>
-        <li class="list"><strong>World Dominance:</strong> While the term "world dominance" may sound ambitious, we are dedicated to making a global impact.
-           Our commitment to excellence, innovation, and community engagement drives us to expand our influence positively and ethically in the digital realm.</li> 
-      </ul>
+      <div class="text-box">
+        <h1 class="kill-gang">KILL GANG</h1>
+        <p>At Kill Gang, we're passionate about a diverse range of interests that bring together the best of the digital age.
+          Our organization is committed to fostering creativity, entertainment, and innovation across various domains, making us a dynamic force in the modern world.</p>
+        <p class="interests">Our Interests:</p>
+        <ul>
+          <li class="list"> <strong>E-Sports:</strong> We are avid supporters of the e-sports industry, where gamers showcase their skills and compete at the highest level. 
+            We believe in the power of competitive gaming to build communities, connect people, and drive the evolution of digital sports. </li>
+          <li class="list"><strong>Music Creation:</strong> Music is the universal language that transcends borders and cultures. We celebrate the art of music creation,
+              offering platforms and resources to help aspiring musicians realize their dreams and connect with audiences worldwide.</li>
+          <li class="list"><strong>Content Creation:</strong> In an era of digital storytelling, content creation is at the heart of our organization. 
+            We empower content creators across various platforms to express themselves, share their passions, and engage with audiences through captivating content.</li>
+          <li class="list"><strong>Gambling:</strong> We acknowledge the excitement and thrill that gambling brings to the lives of many.
+              Our responsible gambling initiatives promote a safe and enjoyable environment for those who choose to engage in this form of entertainment.</li>
+          <li class="list"><strong>World Dominance:</strong> While the term "world dominance" may sound ambitious, we are dedicated to making a global impact.
+            Our commitment to excellence, innovation, and community engagement drives us to expand our influence positively and ethically in the digital realm.</li> 
+        </ul>
+      </div>
       <h1 class="members">MEMBERS</h1>
       <div class="members-container">
         <member
@@ -106,14 +108,22 @@
   @media screen and (min-width: 768px) {
   .text-div{
     background-color: #360e0e;
-    margin-left: auto;
-    margin-right: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: left;
-    max-width: 50vw;
     padding: 0 20px;
+    width: 80%;
+    height: auto;
+    margin-left: 10%;
+  }
+  .text-box{
+    width: 80%;
+  }
+
+  .text-box p{
+    text-align: center;
+    font-weight: 500;
   }
 }
   
@@ -129,7 +139,7 @@
   }
   
   .interests{
-    margin-top: 15px;
+    margin-top: 30px;
     font-weight: 750;
     font-size: 25px;
     margin-bottom: 5px;
