@@ -58,9 +58,10 @@
     flex-direction: column;
     align-items: center;
     text-align: left;
-    max-width: 50vw;
     padding: 0 20px;
-    height: 100vh;
+    width: 80%;
+    height: auto;
+    margin-left: 10%;
   }
 }
 
