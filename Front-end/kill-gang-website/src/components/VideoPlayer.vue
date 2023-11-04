@@ -25,7 +25,7 @@ export default {
   },
   data() {
     return {
-      youtubeVideoUrl: 'https://www.youtube.com/watch?v=vBlHUXRWf0I', // YouTube video URL
+      youtubeVideoUrl: 'https://www.youtube.com/watch?v=iBxRQ5dqVTA&list=PLKfW-GqEVgY3dH1JxVPGJKxRxkia-OCDI&index=201&ab_channel=ICETEA', 
       options: {
 
       },
@@ -34,7 +34,6 @@ export default {
 }
   
 </script>
-
 
 
 
