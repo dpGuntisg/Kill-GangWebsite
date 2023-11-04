@@ -41,20 +41,19 @@
     margin-top: 50px;
     display: flex;
     justify-content: space-between;
+    background-color: #220909b2;
 }
 
 .VideoPlayer{
     top: 300px;
     display: block;
-    margin-top: 50px;
-    width: 1000px;
-    height: 600px;
-    margin-left: 12%;
+    width: 800px;
+    height: 500px;
   }
 
 .CommentSection {
-    margin-top: 45px;
-    width: 100%;
+    width: 30%;
+    text-align: center;
 }
   
   .container{
