@@ -81,7 +81,7 @@ h1 {
 .login-btn,
 .signup-btn {
   border-radius: 4%;
-  background-color: rgba(3, 3, 3, 0.45); ;
+  background-color: rgba(3, 3, 3, 0.45); 
   width: 100px ;
   border-radius: 5px;
   color: #ffffff;

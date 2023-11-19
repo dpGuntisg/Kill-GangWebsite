@@ -33,6 +33,15 @@ components: {
   
 }
 
+@media screen and (max-width: 768px) {
+  .container {
+    text-align: left;
+    width: 100%;
+    padding: 0;
+    height: auto;
+    display: block;
+  }
+}
 
 
 </style>

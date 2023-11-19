@@ -6,7 +6,7 @@
     <RouterLink to="/awards">AWARDS</RouterLink>
     <RouterLink to="/shop">SHOP</RouterLink>
     <RouterLink to="/home">CART</RouterLink>
-    <RouterLink to="/home">PROFILE</RouterLink>
+    <RouterLink to="/profile">PROFILE</RouterLink>
     <RouterLink to="/">LOG OUT</RouterLink>
     <a href="javascript:void(0);" class="icon" @click="toggleMenu">
       <i class="fa fa-bars"></i>
