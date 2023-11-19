@@ -4,7 +4,7 @@
     <RouterLink to="/home">HOME</RouterLink>
     <RouterLink to="/about">ABOUT US</RouterLink>
     <RouterLink to="/awards">AWARDS</RouterLink>
-    <RouterLink to="/home">SHOP</RouterLink>
+    <RouterLink to="/shop">SHOP</RouterLink>
     <RouterLink to="/home">CART</RouterLink>
     <RouterLink to="/home">PROFILE</RouterLink>
     <RouterLink to="/">LOG OUT</RouterLink>
