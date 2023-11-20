@@ -1,7 +1,8 @@
 <template>
     <navbar></navbar>
     <div class="container">
-        <shop></shop>
+      <h1>SHOP</h1>
+      <shop></shop>
     </div>
     
 </template>
@@ -23,25 +24,25 @@ components: {
 <style scoped>
 .container{
   background-color: #360e0e;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
   text-align: left;
   max-width: 70vw;
   padding: 0 20px;
   height: 100vh;
   display: flex;
-  
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 @media screen and (max-width: 768px) {
   .container {
-    text-align: left;
-    width: 100%;
-    padding: 0;
+    padding: 0 20px;
+    max-width: 100%;
     height: auto;
-    display: block;
+    align-items: flex-start;
+    justify-content: flex-start;
   }
 }
-
 
 </style>

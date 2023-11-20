@@ -6,7 +6,7 @@
           <h2>{{ product.name }}</h2>
           <p class="price">{{ product.price }}</p>
           <p class="description">{{ product.description }}</p>
-          <p><button> Add to Cart</button></p>
+          <button> Add to Cart</button>
         </div>
       </div>
     </div>
@@ -19,7 +19,8 @@ export default {
     return {
       products: [
         { id: 1, name: 'Product 1', description: 'balls', price: '\$100', image: '/assets/award.png' },
-        { id: 2, name: 'Product 2', price: '\$200', image: '/assets/award.png' },
+        { id: 2, name: 'Product 2', description:'balls',  price: '\$200', image: '/assets/award.png' },
+        { id: 3, name: 'Product 3', description:'balls',  price: '\$300', image: '/assets/award.png' },
         // Add more products as needed
       ],
     };
@@ -31,9 +32,9 @@ export default {
 
 @media screen and (max-width: 768px) {
   .card{
-    margin: 20px 0; /* Adjust margins for smaller screens */
-    width: calc(100% - 40px); /* Adjust margin for smaller screens */
-    max-width: calc(100% - 40px); /* Adjust margin for smaller screens */
+    margin: 20px 0;
+    width: calc(100% - 40px); 
+    max-width: calc(100% - 40px); 
   }
   .shop{
     width: 100%;
@@ -46,6 +47,7 @@ export default {
   justify-content: space-around;
 }
 .card {
+  position: relative;
   outline-style: solid;
   outline-color: black;
   outline-width: 2px;
@@ -53,6 +55,9 @@ export default {
   margin: 20px;
   text-align: center;
   font-family: arial;
+  display: flex;
+  flex-direction: column;
+  height: 400px;
 }
 
 h1{
@@ -73,17 +78,22 @@ h1{
 }
 
 button {
-  height: 20px;
+  height: 30px;
   border: none;
   outline: 0;
   cursor: pointer;
   width: 100%;
   background-color: black;
   color: aliceblue;
+  position: absolute;
+  bottom: 0;
 }
 
 button:hover{
   opacity: 0.7;
 }
 
+.card:hover{
+  box-shadow: 0 0 30px #4a0000;
+}
 </style>
