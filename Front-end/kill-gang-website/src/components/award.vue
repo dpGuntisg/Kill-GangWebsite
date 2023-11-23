@@ -34,7 +34,7 @@ h2{
     width: 100%;
     text-align: center;
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
  .Award-pic img {
     margin-top: 100px;
