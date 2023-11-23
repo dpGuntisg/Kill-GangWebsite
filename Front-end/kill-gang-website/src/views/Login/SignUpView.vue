@@ -103,7 +103,7 @@ h1 {
     .content {
     margin-top: 0;
     border-radius: 0%;
-    height: 100%;
+    height: 100vh;
     overflow: hidden;
     width: 100%;
     font-size: 18px;

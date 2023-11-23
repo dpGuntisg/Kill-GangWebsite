@@ -36,12 +36,16 @@ components: {
 }
 
 @media screen and (max-width: 768px) {
+
+  h1{
+    margin-top: 70px;
+  }
   .container {
     padding: 0 20px;
-    max-width: 100%;
-    height: auto;
-    align-items: flex-start;
-    justify-content: flex-start;
+    max-width: none;
+    margin-left: none;
+    margin-right: none;
+    height: 100%;
   }
 }
 
