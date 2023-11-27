@@ -47,8 +47,9 @@ h1{
 .VideoPlayer{
   top: 300px;
   display: block;
-  width: 800px;
+  width: 100%;
   height: 500px;
+  aspect-ratio: 16/9;
 }
 
 .CommentSection {
