@@ -24,15 +24,16 @@ components: {
 <style scoped>
 .container{
   background-color: #360e0e;
-  margin: 0 auto;
+  margin-left: 10%;
   text-align: left;
-  max-width: 70vw;
+  max-width: 80%;
   padding: 0 20px;
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+
 }
 
 @media screen and (max-width: 768px) {
