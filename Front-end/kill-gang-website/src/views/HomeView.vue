@@ -72,5 +72,34 @@ h1{
 }
 
 
+@media screen and (max-width: 1000px) {
+    .container{
+      padding: 0 20px;
+      max-width: none;
+      margin-left: none;
+      margin-right: none;
+    }
+
+    .Video-box {
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+    background-color: #220909b2;
+    }
+
+    .VideoPlayer{
+      top: 300px;
+      display: block;
+      width: 800px;
+      height: 500px;
+    }
+
+    .CommentSection {
+      width: 30%;
+      text-align: center;
+    }
+
+}
+
 
 </style>

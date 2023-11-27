@@ -52,7 +52,7 @@ export default {
   outline-color: black;
   outline-width: 2px;
   max-width: 300px;
-  margin: 20px;
+  margin: 10px;
   text-align: center;
   font-family: arial;
   display: flex;
@@ -94,6 +94,6 @@ button:hover{
 }
 
 .card:hover{
-  box-shadow: 0 0 30px #4a0000;
+  box-shadow: 0 30px 30px #4a0000;
 }
 </style>
