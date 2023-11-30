@@ -59,10 +59,10 @@ h1{
 
 .container{
   background-color: #360e0e;
-  margin-left: auto;
+  margin-left: 10%;
   margin-right: auto;
   text-align: left;
-  max-width: 70vw;
+  max-width: 80vw;
   padding: 0 20px;
   height: 100vh;
   display: flex;
