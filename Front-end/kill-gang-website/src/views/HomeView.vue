@@ -4,8 +4,12 @@
   <div class="container">
     <h1>NEWEST KILL GANG CONTENT</h1>
     <div class="Video-box">
-      <VideoPlayer class="VideoPlayer" />
-      <CommentSection class="CommentSection" />
+      <div class="video-container">
+        <VideoPlayer class="VideoPlayer" />
+      </div>
+      <div class="comment-container">
+        <CommentSection class="CommentSection" />
+      </div>
     </div>
     <div class="Song-Box"></div>
   </div>
@@ -72,34 +76,29 @@ h1{
 }
 
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1400px) {
     .container{
       padding: 0 20px;
       max-width: none;
       margin-left: none;
       margin-right: none;
     }
-
     .Video-box {
-    margin-top: 50px;
-    display: flex;
-    justify-content: space-between;
-    background-color: #220909b2;
-    }
+    flex-direction: column;
+    align-items: center;
+  }
 
-    .VideoPlayer{
-      top: 300px;
-      display: block;
-      width: 800px;
-      height: 500px;
+    .VideoPlayer {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
     }
 
     .CommentSection {
-      width: 30%;
+      width: 100%;
       text-align: center;
     }
-
-}
+  }
 
 
 </style>
