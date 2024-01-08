@@ -45,9 +45,7 @@ export default {
   -webkit-box-shadow: 0px 0px 40px 20px rgba(82, 10, 10, 0.64);
   -moz-box-shadow: 0px 0px 40px 20px rgba(82, 10, 10, 0.64);
   box-shadow: 0px 0px 40px 20px rgba(82, 10, 10, 0.64);
-  position: fixed; 
   top: 0; 
-  z-index: 1000;
 }
 
 

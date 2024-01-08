@@ -5,7 +5,7 @@
         <div class="award-text">
             <h2>{{ name }}</h2>
             <p class="date">{{ date }}</p>
-            <p>{{ description }}</p>
+            <p class="description">{{ description }}</p>
         </div>
 
 </template>
@@ -31,7 +31,7 @@ h2{
 
 .award-text{
     font-weight: 200;
-    width: 100%;
+    width: 80%;
     text-align: center;
     margin-top: 20px;
     margin-bottom: 40px;
@@ -45,4 +45,5 @@ h2{
     height: auto;
     margin-bottom: 20px;
  }
+ 
 </style>

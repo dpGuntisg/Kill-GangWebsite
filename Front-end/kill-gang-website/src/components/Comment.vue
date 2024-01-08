@@ -33,8 +33,9 @@ export default {
 <style scoped>
 .comment-input {
   margin-top: 20px;
-  display: flex;
+
   height: 1.5rem;
+  width: 100%;
 }
 
 .comment-inp {

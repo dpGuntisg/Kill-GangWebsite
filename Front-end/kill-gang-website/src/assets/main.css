@@ -30,6 +30,9 @@ body {
     100%{background-position:56% 0%}
 }
 
+html{
+    overflow-x:hidden;
+}
 
 
 

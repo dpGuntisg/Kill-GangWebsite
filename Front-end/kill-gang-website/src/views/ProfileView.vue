@@ -3,6 +3,9 @@
     <navbar></navbar>
     <div class="container">
       <Profile />
+      <div class="liked">
+        
+      </div>
     </div>
   </div>
 </template>
