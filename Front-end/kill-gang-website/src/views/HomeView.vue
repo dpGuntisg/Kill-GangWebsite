@@ -19,14 +19,14 @@
 <script>
 import VideoPlayer from "../components/VideoPlayer.vue";
 import Navbar from '../components/Navbar.vue';
-import CommentSection from "../components/Comment.vue";
+
 
 export default {
 name: "home",
 components: {
   Navbar,
   VideoPlayer,
-  CommentSection
+
 }
 };
 </script>

@@ -7,6 +7,7 @@
           <button class="edit-btn">EDIT</button>
         </div>
       </div>
+      <div class="liked"></div>
     </div>
   </template>
   
@@ -68,4 +69,13 @@
  .edit-btn:hover{
   color: gray;
  }
+
+.liked{
+  display: flex;
+  flex-direction: row;
+  width: 200px;
+  height: 200px;
+  background-color: black;
+
+}
   </style>

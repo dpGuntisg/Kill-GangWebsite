@@ -66,13 +66,6 @@ export default {
   color: black;
 }
 
-
-.topnav a.active {
-  background-color: #04AA6D;
-  color: white;
-}
-
-
 .topnav .icon {
   display: none;
 }
