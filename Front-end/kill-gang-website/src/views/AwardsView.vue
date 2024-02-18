@@ -47,10 +47,16 @@
 
    @media screen and (max-width: 768px) {
     .content{
-      padding: 0 20px;
-      max-width: none;
-      margin-left: none;
-      margin-right: none;
+    background-color: #360e0e;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+    padding: 0 20px;
+    max-width: none;
+    height: 100%;
+    
+      
     }
   
   }

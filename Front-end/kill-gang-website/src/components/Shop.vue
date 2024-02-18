@@ -33,8 +33,7 @@ export default {
 @media screen and (max-width: 768px) {
   .card{
     margin: 20px 0;
-    width: calc(100% - 40px); 
-    max-width: calc(100% - 40px); 
+    width: 100%;
   }
   .shop{
     width: 100%;
@@ -68,7 +67,6 @@ h1{
 
 .product {
     margin-top: 50px;
-    margin: 50px;
 }
 
 .product img {

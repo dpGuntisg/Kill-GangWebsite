@@ -80,8 +80,8 @@ h1{
     .container{
       padding: 0 20px;
       max-width: none;
-      margin-left: none;
-      margin-right: none;
+      margin-left: 0;
+      margin-right: 0;
     }
     .Video-box {
     flex-direction: column;

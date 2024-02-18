@@ -42,10 +42,9 @@ components: {
     margin-top: 70px;
   }
   .container {
-    padding: 0 20px;
     max-width: none;
-    margin-left: none;
-    margin-right: none;
+    margin-left: 0;
+    margin-right: 0;
     height: 100%;
   }
 }
