@@ -46,12 +46,12 @@ export default {
   justify-content: space-around;
 }
 .card {
+  margin: 20px;
   position: relative;
   outline-style: solid;
   outline-color: black;
   outline-width: 2px;
-  max-width: 300px;
-  margin: 10px;
+  width: 300px;
   text-align: center;
   font-family: arial;
   display: flex;

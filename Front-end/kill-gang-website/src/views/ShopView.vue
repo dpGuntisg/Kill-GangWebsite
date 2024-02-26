@@ -36,7 +36,7 @@ components: {
 
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1300px) {
 
   h1{
     margin-top: 70px;
@@ -45,6 +45,12 @@ components: {
     max-width: none;
     margin-left: 0;
     margin-right: 0;
+    height: 100vh;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container{
     height: 100%;
   }
 }

@@ -34,7 +34,7 @@ components: {
 <style scoped>
 
 h1{
-  margin-top: 100px;
+  margin-top: 50px;
   text-align: center;
   font-weight:800;
   font-size: 70px;
@@ -78,7 +78,6 @@ h1{
 
 @media screen and (max-width: 1400px) {
     .container{
-      padding: 0 20px;
       max-width: none;
       margin-left: 0;
       margin-right: 0;
@@ -87,18 +86,19 @@ h1{
     flex-direction: column;
     align-items: center;
   }
+}
 
-    .VideoPlayer {
-      width: 100%;
-      max-width: 100%;
-      height: auto;
-    }
+@media screen and (max-width: 768px){
+  .VideoPlayer{
+  top: 300px;
+  display: block;
+  width: 100%;
+  height: 500px;
+  aspect-ratio: 9/16;
+}
+}
+  
 
-    .CommentSection {
-      width: 100%;
-      text-align: center;
-    }
-  }
 
 
 </style>
