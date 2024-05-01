@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -35,6 +36,35 @@ class UserController extends Controller
     //Login API (POST)
 
     public function login(Request $request){
+
+        // Data validation
+        $request->validate([
+            "email" => "required|email",
+            "password" => "required"
+        ]);
+
+        // User login check
+        if(Auth::attempt([
+            "email" => $request->email,
+            "password" => $request->password
+        ])){
+
+            // User exists
+            $user = Auth::user();
+
+            $token = $user->createToken("userToken")->accessToken;
+
+            return response()->json([
+                "status" => true,
+                "message" => "User logged in successfully",
+                "token" => $token
+            ]);
+        }else{
+            return response()->json([
+                "status" => false,
+                "message" => "Invalid login details"
+            ]);
+        }
 
     }
 
