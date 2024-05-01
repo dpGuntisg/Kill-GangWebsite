@@ -92,4 +92,23 @@ class UserController extends Controller
 
         ]);
     }
+
+    //Delete a user
+
+    public function delete(){
+
+        $user = Auth::user(); //variabl
+
+        try{ //vins kaut ko meigina
+            $user->delete(); //izdzees user
+            auth()->user()->token()->revoke(); //atnem tam fujakam cepumu
+            return response()->json([
+                "message" => "User Deleted"
+            ]);
+                
+        }catch (\Exception $e) { //vins noker eroru lai vins neaizskrien un nesaples man visu vietni
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+
+    }
 }

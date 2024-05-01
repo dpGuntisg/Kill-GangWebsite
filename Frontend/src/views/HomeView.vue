@@ -62,7 +62,7 @@ h1{
 }
 
 .container{
-  background-color: #360e0e;
+  background-color: #00000026;
   margin-left: 10%;
   margin-right: auto;
   text-align: left;

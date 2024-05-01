@@ -3,7 +3,7 @@
       <form>
         <h1>KILL GANG</h1>
           <div class="input-container">
-            <input type="username" class="Username" placeholder="Username" required>
+            <input type="username" class="Name" placeholder="Name" required>
             <input type="email" class="Login-email" placeholder="E-mail" required>
             <input type="password" class="Login-password" placeholder="Password" required>
           </div>
@@ -65,7 +65,7 @@ h1 {
 }
 
 .Login-email,
-.Username,
+.Name,
 .Login-password {
     border-radius: 4%;
     background-color: rgba(3, 3, 3, 0.45); ;

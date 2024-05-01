@@ -18,7 +18,7 @@ Route::post("login", [UserController::class, "login"]);
 Route::group([
     "middleware" => ["auth:api"]
 ], function(){
-
+    Route::get("delete",[UserController::class, "delete"]);
     Route::get("profile", [UserController::class, "profile"]);
     Route::get("logout", [UserController::class, "logout"]);
 });
