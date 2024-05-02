@@ -3,7 +3,7 @@
       <form>
         <h1>KILL GANG</h1>
           <div class="input-container">
-            <input type="username" class="Name" placeholder="Name" required>
+            <input type="Name" class="Name" placeholder="Name" required>
             <input type="email" class="Login-email" placeholder="E-mail" required>
             <input type="password" class="Login-password" placeholder="Password" required>
           </div>
