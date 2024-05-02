@@ -3,17 +3,18 @@
       <form>
         <h1>KILL GANG</h1>
           <div class="input-container">
-            <input type="Name" class="Name" placeholder="Name" required>
-            <input type="email" class="Login-email" placeholder="E-mail" required>
-            <input type="password" class="Login-password" placeholder="Password" required>
+            <input v-model="name" type="Name" class="Name" placeholder="Name" required>
+            <input v-model="email" type="email" class="Login-email" placeholder="E-mail" required>
+            <input v-model="password" type="password" class="Login-password" placeholder="Password" required>
+            <input v-model="passwordConfirmation" type="password" class="Login-password" placeholder="Confirm your password" required>
           </div>
       </form>
         <div class="button-container">
-            <RouterLink to="/home">
+            <RouterLink to="/">
                 <button class="login-btn">LOGIN</button>
             </RouterLink>
             <RouterLink to="/signup" id="signup">
-                <button class="signup-btn">SIGN UP</button>
+                <button @click.prevent="register" class="signup-btn">SIGN UP</button>
             </RouterLink>
         </div>
     </div>
@@ -21,14 +22,50 @@
   </template>
   
   <script>
-
+  import axios from 'axios';
+  
+  export default {
+    name: 'MyComponent',
+  
+    data() {
+      return {
+        name: '',
+        email: '',
+        password: '',
+        passwordConfirmation: '',
+        errorMessage: ''  // To display error message to the user
+      };
+    },
+  
+    methods: {
+      register() {
+        axios.post('http://127.0.0.1:8000/api/register', {
+          name: this.name,
+          email: this.email,
+          password: this.password,
+          password_confirmation: this.passwordConfirmation,
+        })
+        .then(response => {
+          console.log('Registration successful:', response.data);
+          // Redirect or clear form here
+          this.$router.push({ name: 'login' });
+        })
+        .catch(error => {
+          console.error('Registration failed:', error.response.data);
+          this.errorMessage = error.response.data.message || 'Something went wrong';
+        });
+      }
+    }
+  }
   </script>
+  
+  
   
   <style scoped>
   
 
 .content {
-  height: 500px;
+  height: 600px;
   overflow: hidden;
   overflow: none;
   margin-top: 30vh;
