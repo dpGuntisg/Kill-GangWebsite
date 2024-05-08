@@ -21,4 +21,5 @@ Route::group([
     Route::get("delete",[UserController::class, "delete"]);
     Route::get("profile", [UserController::class, "profile"]);
     Route::get("logout", [UserController::class, "logout"]);
+    Route::post("logout", [UserController::class, "logout"]);
 });

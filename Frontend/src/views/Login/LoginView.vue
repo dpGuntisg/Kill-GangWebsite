@@ -1,70 +1,74 @@
 <template>
-    <div class="content">
+  <div class="content">
       <form>
-        <h1>KILL GANG</h1>
+          <h1>KILL GANG</h1>
           <div class="input-container">
-            <input v-model="email" type="email" class="Login-email" placeholder="E-mail" required>
-            <input v-model="password" type="password" class="Login-password" placeholder="Password" required>
+              <input v-model="email" type="email" class="Login-email" placeholder="E-mail" required>
+              <input v-model="password" type="password" class="Login-password" placeholder="Password" required>
+              <!-- Conditionally render error message -->
+              <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
           </div>
       </form>
-        <div class="button-container">
+      <div class="button-container">
+          <button @click.prevent="login" class="login-btn">LOGIN</button>
+          <RouterLink to="/signup" id="signup">
+              <button class="signup-btn">SIGN UP</button>
+          </RouterLink>
+      </div>
+  </div>
+</template>
 
-                <button @click.prevent="login" class="login-btn">LOGIN</button>
+<script>
+export default {
+  name: 'MyComponent',
 
-            <RouterLink to="/signup" id="signup">
-                <button class="signup-btn">SIGN UP</button>
-            </RouterLink>
-        </div>
-    </div>
-    
-  </template>
-  
-  <script>
-  export default {
-    name: 'MyComponent',
-
-    data(){
-      return{
-        email:'',
-        password:''
+  data() {
+      return {
+          email: '',
+          password: '',
+          errorMessage: ''  // Initialize errorMessage as an empty string
       };
-    },
+  },
 
-    methods:{
-      login(){
-        fetch('http://127.0.0.1:8000/api/login', {
-          method:'POST',
-          headers:{
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-                    email: this.email,
-                    password: this.password,
-                }),
-        }).then((response) => {
-                if (response.status === 200) {
-                    return response.json();
-                } else {
-                    throw new Error('Failed to login');
-                }
-            }).then((data) => {
-              if (data.status === true) { // Checks if login was successful
-                localStorage.setItem('userToken', data.token);
-                this.$router.push({ name: 'home' }); // Redirect only if login is successful
+  methods: {
+      login() {
+          fetch('http://127.0.0.1:8000/api/login', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                  email: this.email,
+                  password: this.password,
+              }),
+          }).then(response => {
+              if (response.status === 200) {
+                  return response.json();
               } else {
-                alert(data.message); // Show error message if login failed
+                  throw new Error('Failed to login');
               }
-            }).catch((error) => {
-                console.log(error);
-            });
+          }).then(data => {
+              if (data.status === true) {
+                  localStorage.setItem('userToken', data.token);
+                  this.$router.push({ name: 'home' });
+              } else {
+                  this.errorMessage = data.message;  // Update errorMessage with the message from response
+              }
+          }).catch(error => {
+              console.log(error);
+              this.errorMessage = "Login failed: " + error.message;  // Update errorMessage with the error message
+          });
       }
-    }
+  }
+};
+</script>
 
-  };
-
-  </script>
-  
-  <style scoped>
+<style scoped>
+.error-message {
+  color: red;
+  margin-top: 10px;
+  text-align: center;
+}
   
 
 .content {

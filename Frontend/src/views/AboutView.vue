@@ -107,7 +107,7 @@
 
   @media screen and (min-width: 768px) {
   .text-div{
-    background-color: #360e0e;
+    background-color: #00000026;
     display: flex;
     flex-direction: column;
     align-items: center;

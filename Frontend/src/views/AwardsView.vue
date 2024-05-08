@@ -47,7 +47,7 @@
 
    @media screen and (max-width: 768px) {
     .content{
-    background-color: #360e0e;
+      background-color: #00000026;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -63,7 +63,7 @@
 
   @media screen and (min-width: 768px) {
   .content{
-    background-color: #360e0e;
+    background-color: #00000026;
     display: flex;
     flex-direction: column;
     align-items: center;

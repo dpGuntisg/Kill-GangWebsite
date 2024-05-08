@@ -8,6 +8,10 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
+import axios from 'axios';
+
+axios.defaults.baseURL = 'http://127.0.0.1:8000/api';
+
 library.add(faBars, faTimes)
 
 const app = createApp(App)
