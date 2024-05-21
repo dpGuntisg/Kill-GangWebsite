@@ -8,9 +8,9 @@
           <div class="card">
             <img :src="product.image" alt="Product image">
             <h2>{{ product.name }}</h2>
-            <p class="price">{{ product.price }}</p>
+            <p class="price">{{ formatCurrency(product.price) }}</p>
             <p class="description">{{ product.description }}</p>
-            <button>Add to Cart</button>
+            <button @click="addToCart(product)">Add to Cart</button>
           </div>
         </div>
       </div>
@@ -19,7 +19,8 @@
 </template>
 
 <script>
-import Navbar from '../components/Navbar.vue'; 
+import Navbar from '../components/Navbar.vue';
+import axios from 'axios';
 
 export default {
   name: 'StoreView',
@@ -28,15 +29,37 @@ export default {
   },
   data() {
     return {
-      products: [
-        { id: 1, name: 'Product 1', description: 'balls', price: '$100', image: '/assets/award.png' },
-        { id: 2, name: 'Product 2', description: 'balls', price: '$200', image: '/assets/award.png' },
-        { id: 3, name: 'Product 3', description: 'balls', price: '$300', image: '/assets/award.png' },
-      ],
+      products: [],
     };
   },
+  mounted() {
+    this.fetchProducts();
+  },
+  methods: {
+    async fetchProducts() {
+      try {
+        const token = localStorage.getItem('userToken');
+        const response = await axios.get('/products', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        this.products = response.data;
+      } catch (error) {
+        console.error('Error fetching products:', error);
+
+      }
+    },
+    addToCart(product) {
+      console.log('Adding to cart:', product);
+    },
+    formatCurrency(value) {
+      return `$${parseFloat(value).toFixed(2)}`;
+    }
+  }
 };
 </script>
+
 
 <style scoped>
 .container {
@@ -123,3 +146,5 @@ button:hover, .card:hover {
   }
 }
 </style>
+
+
