@@ -7,9 +7,31 @@ use App\Models\Product;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(Product::all(), 200);
+        //query parameters
+        $search = $request->query('search');
+        $sortKey = $request->query('sortKey', 'name');
+        $sortOrder = $request->query('sortOrder', 'asc');
+        $minPrice = $request->query('minPrice', 0);
+        $maxPrice = $request->query('maxPrice', 999999.99);
+
+        $query = Product::query();
+
+        //search filter
+        if ($search) {
+            $query->where('name', 'like', '%' . $search . '%');
+        }
+
+        //price filter
+        $query->whereBetween('price', [$minPrice, $maxPrice]);
+
+        //sorting
+        $query->orderBy($sortKey, $sortOrder);
+
+        $products = $query->get();
+
+        return response()->json($products, 200);
     }
 
     public function store(Request $request)
@@ -27,7 +49,6 @@ class ProductController extends Controller
                 'message' => 'Product created successfully!',
                 'product' => $product
             ], 201);
-
         } catch (\Exception $e) {
             return response()->json([
                 'error' => 'Failed to create product',

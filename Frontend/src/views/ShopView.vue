@@ -3,6 +3,23 @@
     <navbar></navbar>
     <div class="container">
       <h1>SHOP</h1>
+      <div class="filters">
+        <input v-model="searchQuery" placeholder="Search for products..." @input="fetchProducts" />
+        <label for="sort">Sort by:</label>
+        <select v-model="sortKey" @change="fetchProducts">
+          <option value="name">Name</option>
+          <option value="price">Price</option>
+        </select>
+        <label for="sortOrder">Order:</label>
+        <select v-model="sortOrder" @change="fetchProducts">
+          <option value="asc">Ascending</option>
+          <option value="desc">Descending</option>
+        </select>
+        <label for="minPrice">Min Price:</label>
+        <input type="number" v-model.number="minPrice" @input="fetchProducts" />
+        <label for="maxPrice">Max Price:</label>
+        <input type="number" v-model.number="maxPrice" @input="fetchProducts" />
+      </div>
       <div class="shop">
         <div v-for="product in products" :key="product.id" class="product">
           <div class="card">
@@ -30,6 +47,11 @@ export default {
   data() {
     return {
       products: [],
+      searchQuery: '',
+      sortKey: 'name',
+      sortOrder: 'asc',
+      minPrice: 0,
+      maxPrice: 999999.99,
     };
   },
   mounted() {
@@ -42,16 +64,35 @@ export default {
         const response = await axios.get('/products', {
           headers: {
             Authorization: `Bearer ${token}`
+          },
+          params: {
+            search: this.searchQuery,
+            sortKey: this.sortKey,
+            sortOrder: this.sortOrder,
+            minPrice: this.minPrice,
+            maxPrice: this.maxPrice
           }
         });
         this.products = response.data;
       } catch (error) {
         console.error('Error fetching products:', error);
-
       }
     },
-    addToCart(product) {
-      console.log('Adding to cart:', product);
+    async addToCart(product) {
+      try {
+        const token = localStorage.getItem('userToken');
+        const response = await axios.post('/api/cart', {
+          product_id: product.id,
+          quantity: 1 // you can customize this
+        }, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        console.log('Product added to cart:', response.data);
+      } catch (error) {
+        console.error('Error adding to cart:', error);
+      }
     },
     formatCurrency(value) {
       return `$${parseFloat(value).toFixed(2)}`;
@@ -59,7 +100,6 @@ export default {
   }
 };
 </script>
-
 
 <style scoped>
 .container {
@@ -81,10 +121,28 @@ h1 {
   z-index: 2;
 }
 
+.filters {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.filters input, .filters select {
+  margin-right: 10px;
+  padding: 5px;
+  flex: 1;
+}
+
+.filters label {
+  margin: 5px 10px 0 0;
+}
+
 .shop {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+  width: 100%;
 }
 
 .card {
@@ -146,5 +204,4 @@ button:hover, .card:hover {
   }
 }
 </style>
-
 
