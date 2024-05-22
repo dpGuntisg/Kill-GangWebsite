@@ -81,9 +81,9 @@ export default {
     async addToCart(product) {
       try {
         const token = localStorage.getItem('userToken');
-        const response = await axios.post('/api/cart', {
+        const response = await axios.post('/cart', {
           product_id: product.id,
-          quantity: 1 // you can customize this
+          quantity: 1
         }, {
           headers: {
             Authorization: `Bearer ${token}`
