@@ -25,10 +25,22 @@ class CartController extends Controller
                 'quantity' => 'required|integer|min:1'
             ]);
 
-            $cartItem = Cart::updateOrCreate(
-                ['user_id' => $user->id, 'product_id' => $validatedData['product_id']],
-                ['quantity' => $validatedData['quantity']]
-            );
+            $cartItem = Cart::where('user_id', $user->id)
+                            ->where('product_id', $validatedData['product_id'])
+                            ->first();
+
+            if ($cartItem) {
+                // If item exists, increment the quantity
+                $cartItem->quantity += $validatedData['quantity'];
+                $cartItem->save();
+            } else {
+                // If item does not exist, create a new cart item
+                Cart::create([
+                    'user_id' => $user->id,
+                    'product_id' => $validatedData['product_id'],
+                    'quantity' => $validatedData['quantity']
+                ]);
+            }
 
             return response()->json(['message' => 'Product added to cart successfully'], 200);
         } catch (\Exception $e) {

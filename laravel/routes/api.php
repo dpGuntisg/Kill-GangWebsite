@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CartController;
+use App\Http\Controllers\AwardController;
 
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
@@ -20,6 +21,7 @@ Route::post("login", [UserController::class, "login"]);
 Route::group([
     "middleware" => ["auth:api"]
 ], function(){
+
     Route::delete("delete",[UserController::class, "delete"]);
     Route::get("profile", [UserController::class, "profile"]);
     Route::put("profile", [UserController::class, "update"]);
@@ -30,5 +32,6 @@ Route::group([
     Route::post('cart', [CartController::class, 'addToCart']);
     Route::get('cart', [CartController::class, 'getCartItems']);
     Route::delete('cart/{id}', [CartController::class, 'removeFromCart']);
-    Route::get('cart/total', 'CartController@getTotal');
+    Route::get('cart/total', [CartController::class, 'getTotal']);
+    Route::get('awards', [AwardController::class, 'index']);
 });

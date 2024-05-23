@@ -1,51 +1,62 @@
 <template>
     <navbar></navbar>
+  <div>
     <div class="content">
-        <h1>AWARDS</h1>
-            <award
-                v-for="award in awards"
-                :key="award.name"
-                :name="award.name"
-                :date="award.date"
-                :description="award.description"
-                :image="award.image"
-             />
+      <h1>AWARDS</h1>
+      <div class="awards">
+        <div v-for="award in awards" :key="award.name" class="award">
+          <div class="award-pic">
+            <img :src="award.image" alt="Award Picture">
+          </div>
+          <div class="award-text">
+            <h2>{{ award.name }}</h2>
+            <p class="date">{{ award.date }}</p>
+            <p class="description">{{ award.description }}</p>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
-   
-   <script>
-   import navbar from '../components/Navbar.vue'
-   import award from '../components/award.vue'
-   export default{
-     name: "home",
-     components:{
-       navbar,
-       award,
-     },
-     data() {
-      return {
-        awards: [
-          {
-            name: 'Kaindorf Spring Games',
-            date: '2022 Spring',
-            description: 'In the intense arena of the Kaindorf Spring Games CS:GO tournament, Kill Gang, a team renowned for their precision and teamwork, emerged victorious against formidable adversaries. With exceptional coordination and unyielding determination, they navigated through intense matches, showcasing their skill and adaptability. In the final showdown, Kill Gang faced off against a favored opponent. The match was a nail-biter, filled with heart-stopping moments. However, Kill Gangs unwavering resolve and remarkable plays led them to triumph. With unmatched precision, they secured crucial rounds, clinching the victory and the tournament title. Their win stands as a testament to the power of teamwork and dedication in the world of esports, inspiring gamers worldwide to pursue their passion and strive for greatness.',
-            image: '/assets/award.png'
-          },
-          {
-            name: 'Kaindorf Spring Games',
-            date: '2022 Spring',
-            description: 'In the intense arena of the Kaindorf Spring Games CS:GO tournament, Kill Gang, a team renowned for their precision and teamwork, emerged victorious against formidable adversaries. With exceptional coordination and unyielding determination, they navigated through intense matches, showcasing their skill and adaptability. In the final showdown, Kill Gang faced off against a favored opponent. The match was a nail-biter, filled with heart-stopping moments. However, Kill Gangs unwavering resolve and remarkable plays led them to triumph. With unmatched precision, they secured crucial rounds, clinching the victory and the tournament title. Their win stands as a testament to the power of teamwork and dedication in the world of esports, inspiring gamers worldwide to pursue their passion and strive for greatness.',
-            image: '/assets/award.png'
-          }
-        ]
-      }
-    }
-   }
-   </script>
-   
-   <style scoped>
 
-   @media screen and (max-width: 768px) {
+<script>
+import axios from 'axios';
+import Navbar from '../components/Navbar.vue';
+
+export default {
+  name: 'Home',
+  components: {
+    Navbar,
+  },
+  data() {
+    return {
+      awards: []
+    }
+  },
+  mounted() {
+    this.fetchAwards();
+  },
+  methods: {
+    async fetchAwards() {
+      try {
+        const token = localStorage.getItem('userToken');
+        const response = await axios.get('/awards', {
+        headers: {
+          Authorization: `Bearer ${token}`
+          }
+          });
+      this.awards = response.data;
+    } catch (error) {
+      console.error('Error fetching awards:', error);
+    }
+  }
+  }
+}
+</script>
+
+<style scoped>
+
+@media screen and (max-width: 768px) {
     .content{
       background-color: #00000026;
     display: flex;
@@ -81,5 +92,28 @@ h1{
   font-size: 60px;
 }
 
-   </style>
+.date{
+    font-weight:500;
+    font-size: 30px;
+    margin-bottom: 5px;
+}
+
+.award-text{
+    font-weight: 200;
+    width: 80%;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+ .Award-pic img {
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: 1000px; 
+    height: auto;
+    margin-bottom: 20px;
+ }
+</style>
+
    

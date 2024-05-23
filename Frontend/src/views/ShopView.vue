@@ -83,7 +83,7 @@ export default {
         const token = localStorage.getItem('userToken');
         const response = await axios.post('/cart', {
           product_id: product.id,
-          quantity: 1
+          quantity: 1 
         }, {
           headers: {
             Authorization: `Bearer ${token}`
@@ -204,4 +204,3 @@ button:hover, .card:hover {
   }
 }
 </style>
-
