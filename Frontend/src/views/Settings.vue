@@ -8,13 +8,28 @@
     </div>
     <button @click.prevent="logout" class="logout-btn">LOG OUT</button>
     <button @click="deleteUser" class="delete-btn">DELETE</button> 
-    <button @click="edit" class="delete-btn">EDIT</button> 
+    <button @click="showEditForm" class="edit-btn">EDIT</button> 
+
+    <div v-if="editing">
+      <form @submit.prevent="editUser">
+        <label for="name">Name:</label>
+        <input type="text" v-model="editForm.name" id="name" required>
+        <label for="email">Email:</label>
+        <input type="email" v-model="editForm.email" id="email" required>
+        <label for="password">Password:</label>
+        <input type="password" v-model="editForm.password" id="password">
+        <label for="password_confirmation">Confirm Password:</label>
+        <input type="password" v-model="editForm.password_confirmation" id="password_confirmation">
+        <button type="submit">Save Changes</button>
+        <button type="button" @click="cancelEdit">Cancel</button>
+      </form>
+    </div>
   </div>
 </template>
 
 <script>
 import Navbar from '../components/Navbar.vue';
-import axios from 'axios';  
+import axios from 'axios';
 
 export default {
   name: "profile",
@@ -23,11 +38,18 @@ export default {
   },
   data() {
     return {
-      user: null  
+      user: null,
+      editing: false,
+      editForm: {
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: ''
+      }
     };
   },
   created() {
-    this.fetchUserProfile();  
+    this.fetchUserProfile();
   },
   methods: {
     logout() {
@@ -56,31 +78,31 @@ export default {
     },
 
     deleteUser() {
-  const token = localStorage.getItem('userToken');
-  if (!token) {
-    console.error('Authentication token not found');
-    alert('Please log in to delete your account.'); 
-    this.$router.push('/login');
-    return;
-  }
+      const token = localStorage.getItem('userToken');
+      if (!token) {
+        console.error('Authentication token not found');
+        alert('Please log in to delete your account.'); 
+        this.$router.push('/login');
+        return;
+      }
 
-  const config = {
-    headers: {
-      'Authorization': `Bearer ${token}`
-    }
-  };
+      const config = {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      };
 
-  axios.delete('/delete', config) 
-    .then(response => {
-      console.log("User deleted:", response.data);
-      localStorage.removeItem('userToken');
-      this.$router.push('/');
-    })
-    .catch(error => {
-      console.error('Error deleting user:', error.response ? error.response.data : 'No response data');
-      alert('Failed to delete account.');
-    });
-},
+      axios.delete('/delete', config) 
+        .then(response => {
+          console.log("User deleted:", response.data);
+          localStorage.removeItem('userToken');
+          this.$router.push('/');
+        })
+        .catch(error => {
+          console.error('Error deleting user:', error.response ? error.response.data : 'No response data');
+          alert('Failed to delete account.');
+        });
+    },
 
     fetchUserProfile() {
       const token = localStorage.getItem('userToken');
@@ -94,12 +116,11 @@ export default {
         headers: { 'Authorization': `Bearer ${token}` }
       })
       .then(response => {
-        this.user = response.data.data;  
+        this.user = response.data.data;
         console.log('User data fetched successfully:', this.user);
       })
       .catch(error => {
         console.error('Failed to fetch user data:', error);
-        
       });
     },
 
@@ -108,10 +129,45 @@ export default {
       return date.toLocaleDateString('en-US', {
         weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
       });
+    },
+
+    showEditForm() {
+      this.editing = true;
+      this.editForm.name = this.user.name;
+      this.editForm.email = this.user.email;
+    },
+
+    cancelEdit() {
+      this.editing = false;
+    },
+
+    editUser() {
+      const token = localStorage.getItem('userToken');
+      if (!token) {
+        console.error('Authentication token not found');
+        alert('Please log in to edit your account.');
+        this.$router.push('/login');
+        return;
+      }
+
+      const config = {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      };
+
+      axios.put('/profile', this.editForm, config)
+        .then(response => {
+          console.log("User updated successfully:", response.data);
+          this.user = response.data.data;
+          this.editing = false;
+        })
+        .catch(error => {
+          console.error('Error updating user:', error.response ? error.response.data : 'No response data');
+          alert('Failed to update account.');
+        });
     }
   }
-
-
 };
 </script>
 

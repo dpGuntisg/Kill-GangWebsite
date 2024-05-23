@@ -22,6 +22,7 @@ Route::group([
 ], function(){
     Route::delete("delete",[UserController::class, "delete"]);
     Route::get("profile", [UserController::class, "profile"]);
+    Route::put("profile", [UserController::class, "update"]);
     Route::get("logout", [UserController::class, "logout"]);
     Route::post("logout", [UserController::class, "logout"]);
     Route::get('products', [ProductController::class, 'index']);
