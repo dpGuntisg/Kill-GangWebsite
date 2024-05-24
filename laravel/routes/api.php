@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\AwardController;
+use App\Http\Controllers\ImageController;
 
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
@@ -21,7 +22,7 @@ Route::post("login", [UserController::class, "login"]);
 Route::group([
     "middleware" => ["auth:api"]
 ], function(){
-
+    Route::post('/upload', [ImageController::class, 'upload']);
     Route::delete("delete",[UserController::class, "delete"]);
     Route::get("profile", [UserController::class, "profile"]);
     Route::put("profile", [UserController::class, "update"]);
