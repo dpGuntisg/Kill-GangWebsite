@@ -3,7 +3,8 @@
     <navbar></navbar>
     <div class="container">
       <h1>SHOP</h1>
-      <div class="filters">
+      <button @click="toggleFilters" class="filter-button">Toggle Filters</button>
+      <div class="filters" v-if="filtersVisible">
         <input v-model="searchQuery" placeholder="Search for products..." @input="fetchProducts" />
         <label for="sort">Sort by:</label>
         <select v-model="sortKey" @change="fetchProducts">
@@ -52,6 +53,7 @@ export default {
       sortOrder: 'asc',
       minPrice: 0,
       maxPrice: 999999.99,
+      filtersVisible: false, // Add this line
     };
   },
   mounted() {
@@ -96,12 +98,34 @@ export default {
     },
     formatCurrency(value) {
       return `$${parseFloat(value).toFixed(2)}`;
+    },
+    toggleFilters() {
+      this.filtersVisible = !this.filtersVisible;
     }
   }
 };
 </script>
 
 <style scoped>
+
+input {
+    border-radius: 4%;
+    background-color: rgba(3, 3, 3, 0.45);
+    border: none;
+    color: rgb(156, 154, 154);
+    height: 40px;
+    width: 250px;
+}
+
+select {
+  border-radius: 4%;
+  background-color: rgba(3, 3, 3, 0.45);
+  border: none;
+  color: white;
+  height: 40px;
+  width: 250px;
+}
+
 .container {
   background-color: #00000026;
   margin-left: 10%;
@@ -119,6 +143,21 @@ h1 {
   margin-top: 50px;
   position: relative;
   z-index: 2;
+}
+
+.filter-button {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  background-color: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.filter-button:hover {
+  opacity: 0.7;
 }
 
 .filters {

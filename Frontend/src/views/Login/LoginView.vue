@@ -5,7 +5,7 @@
           <div class="input-container">
               <input v-model="email" type="email" class="Login-email" placeholder="E-mail" required>
               <input v-model="password" type="password" class="Login-password" placeholder="Password" required>
-              <!-- Conditionally render error message -->
+
               <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
           </div>
       </form>
@@ -26,7 +26,7 @@ export default {
       return {
           email: '',
           password: '',
-          errorMessage: ''  // Initialize errorMessage as an empty string
+          errorMessage: '' 
       };
   },
 
@@ -52,11 +52,11 @@ export default {
                   localStorage.setItem('userToken', data.token);
                   this.$router.push({ name: 'home' });
               } else {
-                  this.errorMessage = data.message;  // Update errorMessage with the message from response
+                  this.errorMessage = data.message; 
               }
           }).catch(error => {
               console.log(error);
-              this.errorMessage = "Login failed: " + error.message;  // Update errorMessage with the error message
+              this.errorMessage = "Login failed: " + error.message; 
           });
       }
   }

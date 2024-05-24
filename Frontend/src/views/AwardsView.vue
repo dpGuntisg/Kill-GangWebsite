@@ -81,7 +81,7 @@ export default {
     text-align: left;
     padding: 0 20px;
     width: 80%;
-    height: 100%;
+    height: 100vh;
     margin-left: 10%;
   }
 }
