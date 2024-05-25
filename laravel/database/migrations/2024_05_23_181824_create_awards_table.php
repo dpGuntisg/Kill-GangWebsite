@@ -13,7 +13,7 @@ class CreateAwardsTable extends Migration
             $table->string('name');
             $table->string('date');
             $table->text('description');
-            $table->string('image');
+            $table->foreignId('image_id')->nullable()->constrained('images')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -21,5 +21,6 @@ class CreateAwardsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('awards');
+        
     }
 }

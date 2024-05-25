@@ -9,7 +9,7 @@ class AwardController extends Controller
 {
     public function index()
     {
-        $awards = Award::all();
+        $awards = Award::with('image')->get();
         return response()->json($awards);
     }
 }

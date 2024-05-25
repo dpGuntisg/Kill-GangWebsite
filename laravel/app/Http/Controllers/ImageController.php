@@ -1,9 +1,11 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Image;
+use App\Models\Award;
 use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller {
@@ -18,9 +20,20 @@ class ImageController extends Controller {
 
         $imageModel = new Image();
         $imageModel->filename = $filename;
-        $imageModel->filepath = '/storage/' . $path;
+        $imageModel->filepath = $path;
         $imageModel->save();
 
         return response()->json(['message' => 'Image uploaded successfully', 'image' => $imageModel]);
+    }
+
+    public function createAward(Request $request) {
+        $award = new Award();
+        $award->name = $request->input('name');
+        $award->date = $request->input('date');
+        $award->description = $request->input('description');
+        $award->image_id = $request->input('image_id'); 
+        $award->save();
+
+        return response()->json(['message' => 'Award created successfully', 'award' => $award]);
     }
 }

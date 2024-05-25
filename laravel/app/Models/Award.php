@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Award extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['name', 'date', 'description', 'image_id'];
+
+    public function image()
+    {
+        return $this->belongsTo(Image::class);
+    }
 }
