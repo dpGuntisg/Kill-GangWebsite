@@ -19,10 +19,18 @@ Route::post("register", [UserController::class, "register"]);
 Route::post("login", [UserController::class, "login"]);
 
 // Protected Routes
+
+Route::group(['middleware' => ['auth:api', 'admin']], function () {
+    // Admin-specific routes here
+    Route::post('/upload', [ImageController::class, 'upload']);
+    Route::put('/awards/{id}', [AwardController::class, 'update']);
+    Route::delete('/awards/{id}', [AwardController::class, 'destroy']); 
+
+});
+
 Route::group([
     "middleware" => ["auth:api"]
 ], function(){
-    Route::post('/upload', [ImageController::class, 'upload']);
     Route::delete("delete",[UserController::class, "delete"]);
     Route::get("profile", [UserController::class, "profile"]);
     Route::put("profile", [UserController::class, "update"]);

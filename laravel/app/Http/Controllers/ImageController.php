@@ -26,14 +26,4 @@ class ImageController extends Controller {
         return response()->json(['message' => 'Image uploaded successfully', 'image' => $imageModel]);
     }
 
-    public function createAward(Request $request) {
-        $award = new Award();
-        $award->name = $request->input('name');
-        $award->date = $request->input('date');
-        $award->description = $request->input('description');
-        $award->image_id = $request->input('image_id'); 
-        $award->save();
-
-        return response()->json(['message' => 'Award created successfully', 'award' => $award]);
-    }
 }

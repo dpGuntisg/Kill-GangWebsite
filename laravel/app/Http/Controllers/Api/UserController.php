@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    // Reguster API (POST)
+    // Register API (POST)
     public function register(Request $request){
 
         // Data validation
@@ -24,7 +24,8 @@ class UserController extends Controller
         User::create([
             "name" => $request->name,
             "email" => $request->email,
-            "password" => Hash::make($request->password) 
+            "password" => Hash::make($request->password),
+            "role" => "user" // Default role is 'user'
         ]);
 
         return response()->json([
@@ -33,8 +34,7 @@ class UserController extends Controller
         ]);
     }
 
-    //Login API (POST)
-
+    // Login API (POST)
     public function login(Request $request){
 
         // Data validation
@@ -57,7 +57,8 @@ class UserController extends Controller
             return response()->json([
                 "status" => true,
                 "message" => "User logged in successfully",
-                "token" => $token
+                "token" => $token,
+                "role" => $user->role // Include user role in the response
             ]);
         }else{
             return response()->json([
@@ -68,8 +69,7 @@ class UserController extends Controller
 
     }
 
-    //Profile API (GET)
-
+    // Profile API (GET)
     public function profile(){
 
         $user = Auth::user();
@@ -81,8 +81,7 @@ class UserController extends Controller
         ]);
     }
 
-    //Logout
-
+    // Logout
     public function logout(){
         
         auth()->user()->token()->revoke();  
@@ -93,11 +92,10 @@ class UserController extends Controller
         ]);
     }
 
-    //Delete a user
-
+    // Delete a user
     public function delete(){
 
-        $user = Auth::user(); //variabl
+        $user = Auth::user(); //variable
 
         try{ //vins kaut ko meigina
             $user->delete(); //izdzees user
@@ -112,29 +110,30 @@ class UserController extends Controller
 
     }
 
+    // Update user profile
     public function update(Request $request)
-{
-    $user = Auth::user();
+    {
+        $user = Auth::user();
 
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-        'password' => 'nullable|string|min:8|confirmed',
-    ]);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'password' => 'nullable|string|min:8|confirmed',
+        ]);
 
-    $user->name = $request->name;
-    $user->email = $request->email;
+        $user->name = $request->name;
+        $user->email = $request->email;
 
-    if ($request->filled('password')) {
-        $user->password = Hash::make($request->password);
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Profile updated successfully',
+            'data' => $user
+        ]);
     }
-
-    $user->save();
-
-    return response()->json([
-        'status' => true,
-        'message' => 'Profile updated successfully',
-        'data' => $user
-    ]);
- }
 }

@@ -13,8 +13,24 @@
               <h2>{{ award.name }}</h2>
               <p class="date">{{ award.date }}</p>
               <p class="description">{{ award.description }}</p>
+              <div v-if="isAdmin">
+                <button @click="editAward(award)">Edit</button>
+              </div>
             </div>
           </div>
+        </div>
+        <div v-if="isAdmin && selectedAward">
+          <h2>Edit Award</h2>
+          <form @submit.prevent="updateAward">
+            <label for="name">Name:</label>
+            <input v-model="selectedAward.name" id="name" required>
+            <label for="date">Date:</label>
+            <input v-model="selectedAward.date" id="date" required>
+            <label for="description">Description:</label>
+            <textarea v-model="selectedAward.description" id="description" required></textarea>
+            <button type="submit">Save</button>
+            <button @click="cancelEdit">Cancel</button>
+          </form>
         </div>
       </div>
     </div>
@@ -32,11 +48,14 @@ export default {
   },
   data() {
     return {
-      awards: []
+      awards: [],
+      selectedAward: null,
+      isAdmin: false,
     };
   },
   mounted() {
     this.fetchAwards();
+    this.checkAdmin();
   },
   methods: {
     async fetchAwards() {
@@ -54,6 +73,41 @@ export default {
     },
     getImagePath(filepath) {
       return `http://localhost:8000/storage/${filepath}`;
+    },
+    editAward(award) {
+      this.selectedAward = { ...award };
+    },
+    cancelEdit() {
+      this.selectedAward = null;
+    },
+    async updateAward() {
+      try {
+        const token = localStorage.getItem('userToken');
+        await axios.put(`/awards/${this.selectedAward.id}`, this.selectedAward, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        this.fetchAwards();
+        this.selectedAward = null;
+      } catch (error) {
+        console.error('Error updating award:', error);
+      }
+    },
+    async checkAdmin() {
+      try {
+        const token = localStorage.getItem('userToken');
+        const response = await axios.get('/profile', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        console.log(response.data);
+        this.isAdmin = response.data.data.role === 'admin';
+        console.log(this.isAdmin)
+      } catch (error) {
+        console.error('Error checking admin role:', error);
+      }
     }
   }
 };
