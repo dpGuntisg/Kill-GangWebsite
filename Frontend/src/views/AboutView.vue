@@ -1,7 +1,7 @@
 <template>
   <div>
     <navbar></navbar>
-    <div class="content">
+    <div class="text-div">
       <div class="text-box">
 
         <h1 class="kill-gang">KILL GANG</h1>
@@ -16,7 +16,6 @@
       </div>
       <h1 class="members">MEMBERS</h1>
       <div class="members-container">
-        <!-- Display members -->
         <div v-for="member in members" :key="member.id" class="member1">
           <div class="member-pfp">
             <img :src="getImagePath(member.image.filepath)" alt="Member Profile">
@@ -136,81 +135,84 @@ export default {
 </script>
   
 <style scoped>
+
 @media screen and (max-width: 768px) {
-  .content {
-    padding: 0 20px;
-    max-width: none;
-    margin-left: none;
-    margin-right: none;
+    .text-div {
+      padding: 0 20px;
+      max-width: none;
+      margin-left: none;
+      margin-right: none;
+    }
+  
   }
 
-}
+  @media screen and (min-width: 768px) {
+  .text-div{
+    background-color: #00000026;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+    padding: 0 20px;
+    width: 80%;
+    height: auto;
+    margin-left: 10%;
+  }
+  .text-box{
+    width: 80%;
+  }
 
-@media screen and (min-width: 768px) {
-.content{
-  background-color: #00000026;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: left;
-  padding: 0 20px;
-  width: 80%;
-  height: auto;
-  margin-left: 10%;
+  .text-box p{
+    text-align: center;
+    font-weight: 500;
+  }
 }
-.text-box{
-  width: 80%;
-}
+  
+  .kill-gang {
+    margin-top: 10%;
+    text-align: center;
+    font-weight:800;
+    font-size: 70px;
+  }
+  
+  strong {
+    font-weight:650;
+  }
+  
+  .interests{
+    margin-top: 30px;
+    font-weight: 750;
+    font-size: 25px;
+    margin-bottom: 5px;
+  }
+  
+  .list {
+      margin-bottom: 10px;
+      list-style-type:disc;
+  }
+  
+  .members{
+    margin-bottom: 3vh;
+    margin-top: 10vh;
+     text-align: center;
+     font-weight:800;
+     font-size: 60px;
+  }
+  
+  
+  .members-container {
+    display: flex;
+    flex-direction: column;
+  }
 
-.text-box p{
-  text-align: center;
-  font-weight: 500;
-}
-}
+  .member-pfp img {
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
 
-.kill-gang {
-  margin-top: 10%;
-  text-align: center;
-  font-weight:800;
-  font-size: 70px;
-}
-
-strong {
-  font-weight:650;
-}
-
-.interests{
-  margin-top: 30px;
-  font-weight: 750;
-  font-size: 25px;
-  margin-bottom: 5px;
-}
-
-.list {
-    margin-bottom: 10px;
-    list-style-type:disc;
-}
-
-.members{
-  margin-bottom: 3vh;
-  margin-top: 10vh;
-   text-align: center;
-   font-weight:800;
-   font-size: 60px;
-}
-
-
-.members-container {
-  display: flex;
-  flex-direction: column;
-}
-
-.member-pfp img {
-  width: 200px;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 8px;
-}
+/* asdasdasdasdasdasd */
 
 .member1 {
   display: flex;
@@ -279,5 +281,5 @@ strong {
   }
 }
 
-</style>
+  </style>
 
