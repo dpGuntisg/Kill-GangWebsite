@@ -15,9 +15,17 @@ class MemberController extends Controller
 
     public function update(Request $request, $id)
     {
-        $award = Member::findOrFail($id);
-        $award->update($request->all());
+        $member = Member::findOrFail($id);
+        $member->update($request->all());
 
         return response()->json(['message' => 'Member updated successfully']);
-    }  
+    }
+
+    public function destroy($id)
+    {
+        $member = Member::findOrFail($id);
+        $member->delete();
+
+        return response()->json(['message' => 'Member deleted successfully']);
+    }
 }

@@ -1,7 +1,7 @@
 <template>
   <div>
     <navbar></navbar>
-    <div class="container">
+    <div class="content">
       <h1>SHOP</h1>
       <button @click="toggleFilters" class="filter-button">Toggle Filters</button>
       <div class="filters" v-if="filtersVisible">
@@ -53,7 +53,7 @@ export default {
       sortOrder: 'asc',
       minPrice: 0,
       maxPrice: 999999.99,
-      filtersVisible: false, // Add this line
+      filtersVisible: false,
     };
   },
   mounted() {
@@ -126,7 +126,7 @@ select {
   width: 250px;
 }
 
-.container {
+.content {
   background-color: #00000026;
   margin-left: 10%;
   text-align: left;

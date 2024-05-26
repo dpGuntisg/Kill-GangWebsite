@@ -1,7 +1,7 @@
 <template>
 
   <navbar></navbar>
-  <div class="container">
+  <div class="content">
     <h1>NEWEST KILL GANG CONTENT</h1>
     <div class="Video-box">
       <div class="video-container">
@@ -61,7 +61,7 @@ h1{
   text-align: center;
 }
 
-.container{
+.content{
   background-color: #00000026;
   margin-left: 10%;
   margin-right: auto;
@@ -77,7 +77,7 @@ h1{
 
 
 @media screen and (max-width: 1400px) {
-    .container{
+    .content{
       max-width: none;
       margin-left: 0;
       margin-right: 0;

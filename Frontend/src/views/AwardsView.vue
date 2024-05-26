@@ -170,4 +170,25 @@ h1 {
   height: auto;
   margin-bottom: 20px;
 }
+
+button{
+  border-radius: 4%;
+  background-color: rgba(3, 3, 3, 0.45); 
+  width: 100px ;
+  border-radius: 5px;
+  color: #ffffff;
+  background-color: #4a0000; 
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px;
+  transition: background-color 0.2s ease-in;
+  margin: 0 30px;
+  margin-top: 20px;
+}
+
+button:hover{
+  background-color: #d5d5d5;
+  box-shadow: 0 0 30px #4a0000;
+}
+
 </style>

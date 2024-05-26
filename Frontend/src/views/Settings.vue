@@ -1,6 +1,6 @@
 <template>
   <navbar></navbar>
-  <div class="container">
+  <div class="content">
     <div v-if="user">
       <p> EMAIL: {{ user.email }}</p>
       <p> NAME: {{ user.name }} </p> 
@@ -172,7 +172,7 @@ export default {
 </script>
 
 <style scoped>
-.container {
+.content {
 background-color: #00000026;
 margin-left: 10%;
 max-width: 80%;

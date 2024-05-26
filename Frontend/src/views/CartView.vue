@@ -1,7 +1,7 @@
 <template>
   <div>
     <navbar></navbar>
-    <div class="container">
+    <div class="content">
       <h1>Shopping Cart</h1>
       <div v-if="cartItems.length > 0" class="cart-items">
         <div v-for="item in cartItems" :key="item.id" class="cart-item">
@@ -79,7 +79,7 @@ export default {
 </script>
 
 <style scoped>
-.container {
+.content {
   background-color: #00000026;
   margin-left: 10%;
   text-align: left;

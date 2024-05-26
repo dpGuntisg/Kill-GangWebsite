@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\AwardController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\Api\MemberController;
 
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
@@ -24,7 +25,8 @@ Route::group(['middleware' => ['auth:api', 'CheckRole:admin']], function () {
     // Admin-specific routes here
     Route::post('/upload', [ImageController::class, 'upload']);
     Route::put('/awards/{id}', [AwardController::class, 'update']);
-    Route::delete('/awards/{id}', [AwardController::class, 'destroy']); 
+    Route::put('/members/{id}', [MemberController::class, 'update']);
+    Route::delete('/members/{id}', [MemberController::class, 'destroy']); 
 });
 
 Route::group([
@@ -42,4 +44,5 @@ Route::group([
     Route::delete('cart/{id}', [CartController::class, 'removeFromCart']);
     Route::get('cart/total', [CartController::class, 'getTotal']);
     Route::get('awards', [AwardController::class, 'index']);
+    Route::get('members', [MemberController::class, 'index']);
 });
