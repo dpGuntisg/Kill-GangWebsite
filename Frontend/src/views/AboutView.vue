@@ -281,5 +281,37 @@ export default {
   }
 }
 
+button {
+  border-radius: 4%;
+  background-color: rgba(3, 3, 3, 0.45);
+  width: 90px;
+  border-radius: 5px;
+  color: #ffffff;
+  background-color: #4a0000;
+  border: none;
+  cursor: pointer;
+  padding: 8px 0px;
+  transition: background-color 0.2s ease-in;
+  margin: 0 5px;
+}
+
+button:hover {
+  background-color: #d5d5d5;
+  box-shadow: 0 0 30px #4a0000;
+}
+
+input {
+    border-radius: 4%;
+    background-color: rgba(3, 3, 3, 0.45);
+    border: none;
+    color: rgb(156, 154, 154);
+    height: 40px;
+    width: 250px;
+}
+
+textarea{
+  width: 5rem;
+}
+
   </style>
 
