@@ -3,7 +3,7 @@
     <navbar></navbar>
     <div class="content">
       <div class="text-box">
-        <!-- About Us Content -->
+
         <h1 class="kill-gang">KILL GANG</h1>
         <p>At Kill Gang, we're passionate about a diverse range of interests that bring together the best of the digital age.
           Our organization is committed to fostering creativity, entertainment, and innovation across various domains, making us a dynamic force in the modern world.</p>
@@ -11,7 +11,7 @@
         <ul>
           <li class="list"> <strong>E-Sports:</strong> We are avid supporters of the e-sports industry, where gamers showcase their skills and compete at the highest level. 
             We believe in the power of competitive gaming to build communities, connect people, and drive the evolution of digital sports. </li>
-          <!-- Other interests listed here -->
+
         </ul>
       </div>
       <h1 class="members">MEMBERS</h1>
@@ -134,87 +134,85 @@ export default {
   }
 };
 </script>
-
-
   
-  <style scoped>
-  @media screen and (max-width: 768px) {
-    .content {
-      padding: 0 20px;
-      max-width: none;
-      margin-left: none;
-      margin-right: none;
-    }
-  
-  }
-
-  @media screen and (min-width: 768px) {
+<style scoped>
+@media screen and (max-width: 768px) {
   .content {
-    background-color: #00000026;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: left;
     padding: 0 20px;
-    width: 80%;
-    height: auto;
-    margin-left: 10%;
-  }
-  .text-box{
-    width: 80%;
+    max-width: none;
+    margin-left: none;
+    margin-right: none;
   }
 
-  .text-box p{
-    text-align: center;
-    font-weight: 500;
-  }
 }
-  
-  .kill-gang {
-    margin-top: 10%;
-    text-align: center;
-    font-weight:800;
-    font-size: 70px;
-  }
-  
-  strong {
-    font-weight:650;
-  }
-  
-  .interests{
-    margin-top: 30px;
-    font-weight: 750;
-    font-size: 25px;
-    margin-bottom: 5px;
-  }
-  
-  .list {
-      margin-bottom: 10px;
-      list-style-type:disc;
-  }
-  
-  .members{
-    margin-bottom: 3vh;
-    margin-top: 10vh;
-     text-align: center;
-     font-weight:800;
-     font-size: 60px;
-  }
-  
-  
-  .members-container {
-    display: flex;
-    flex-direction: column;
-  }
 
-  .member-pfp img {
-    width: 200px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 8px;
-  }
+@media screen and (min-width: 768px) {
+.content{
+  background-color: #00000026;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: left;
+  padding: 0 20px;
+  width: 80%;
+  height: auto;
+  margin-left: 10%;
+}
+.text-box{
+  width: 80%;
+}
 
-  .member1 {
+.text-box p{
+  text-align: center;
+  font-weight: 500;
+}
+}
+
+.kill-gang {
+  margin-top: 10%;
+  text-align: center;
+  font-weight:800;
+  font-size: 70px;
+}
+
+strong {
+  font-weight:650;
+}
+
+.interests{
+  margin-top: 30px;
+  font-weight: 750;
+  font-size: 25px;
+  margin-bottom: 5px;
+}
+
+.list {
+    margin-bottom: 10px;
+    list-style-type:disc;
+}
+
+.members{
+  margin-bottom: 3vh;
+  margin-top: 10vh;
+   text-align: center;
+   font-weight:800;
+   font-size: 60px;
+}
+
+
+.members-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.member-pfp img {
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.member1 {
   display: flex;
   flex-direction: row; 
   flex-wrap: wrap; 
@@ -281,33 +279,5 @@ export default {
   }
 }
 
-button{
-  border-radius: 4%;
-  background-color: rgba(3, 3, 3, 0.45); 
-  width: 100px ;
-  border-radius: 5px;
-  color: #ffffff;
-  background-color: #4a0000; 
-  border: none;
-  cursor: pointer;
-  padding: 10px 20px;
-  transition: background-color 0.2s ease-in;
-  margin: 0 30px;
-  margin-top: 20px;
-}
+</style>
 
-button:hover{
-  background-color: #d5d5d5;
-  box-shadow: 0 0 30px #4a0000;
-}
-
-input , textarea{
-    border-radius: 4%;
-    background-color: rgba(3, 3, 3, 0.45);
-    border: none;
-    color: rgb(255, 255, 255);
-    height: 40px;
-    width: 250px;
-}
-
-  </style>
