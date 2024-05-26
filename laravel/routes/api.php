@@ -20,12 +20,11 @@ Route::post("login", [UserController::class, "login"]);
 
 // Protected Routes
 
-Route::group(['middleware' => ['auth:api', 'admin']], function () {
+Route::group(['middleware' => ['auth:api', 'CheckRole:admin']], function () {
     // Admin-specific routes here
     Route::post('/upload', [ImageController::class, 'upload']);
     Route::put('/awards/{id}', [AwardController::class, 'update']);
     Route::delete('/awards/{id}', [AwardController::class, 'destroy']); 
-
 });
 
 Route::group([
