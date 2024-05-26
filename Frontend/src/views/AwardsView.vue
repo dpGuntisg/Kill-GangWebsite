@@ -72,7 +72,7 @@ export default {
       }
     },
     getImagePath(filepath) {
-      return `http://localhost:8000/storage/${filepath}`;
+      return `http://localhost:8000/${filepath}`;
     },
     editAward(award) {
       this.selectedAward = { ...award };
