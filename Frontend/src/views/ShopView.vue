@@ -3,6 +3,9 @@
     <navbar></navbar>
     <div class="content">
       <h1>SHOP</h1>
+      <div v-if="showCartNotification" class="cart-notification">
+        Item successfully added to cart!
+      </div>
       <button @click="toggleFilters" class="filter-button">Toggle Filters</button>
       <div class="filters" v-if="filtersVisible">
         <input v-model="searchQuery" placeholder="Search for products..." @input="fetchProducts" />
@@ -54,6 +57,7 @@ export default {
       minPrice: 0,
       maxPrice: 999999.99,
       filtersVisible: false,
+      showCartNotification: false,
     };
   },
   mounted() {
@@ -92,10 +96,14 @@ export default {
           }
         });
         console.log('Product added to cart:', response.data);
+        this.showCartNotification = true;
+        setTimeout(() => {
+          this.showCartNotification = false; 
+        }, 1000);
       } catch (error) {
         console.error('Error adding to cart:', error);
       }
-    },
+},
     formatCurrency(value) {
       return `$${parseFloat(value).toFixed(2)}`;
     },
@@ -219,6 +227,29 @@ button {
 button:hover, .card:hover {
   opacity: 0.7;
   box-shadow: 0 30px 30px #4a0000;
+}
+
+.cart-notification {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(3, 3, 3, 0.45);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  z-index: 1000;
+  opacity: 0.9;
+  animation: fadeOut 3s ease-in-out; 
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 @media screen and (max-width: 1300px) {

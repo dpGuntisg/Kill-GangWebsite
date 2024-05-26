@@ -1,67 +1,82 @@
 <template>
-  <div class="content">
+    <div class="content">
       <form>
-          <h1>KILL GANG</h1>
-          <div class="input-container">
-              <input v-model="email" type="email" class="Login-email" placeholder="E-mail" required>
-              <input v-model="password" type="password" class="Login-password" placeholder="Password" required>
-
-              <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
-          </div>
+        <h1>KILL GANG</h1>
+        <div class="input-container">
+          <input v-model="email" type="email" class="Login-email" placeholder="E-mail" required>
+          <div v-if="errors.includes('Email field must be filled')" class="error-message">Email field must be filled</div>
+          <input v-model="password" type="password" class="Login-password" placeholder="Password" required>
+          <div v-if="errors.includes('Password field must be filled')" class="error-message">Password field must be filled</div>
+          <div v-if="loginError" class="error-message">{{ loginError }}</div>
+        </div>
       </form>
       <div class="button-container">
-          <button @click.prevent="login" class="login-btn">LOGIN</button>
-          <RouterLink to="/signup" id="signup">
-              <button class="signup-btn">SIGN UP</button>
-          </RouterLink>
+        <button @click.prevent="login" class="login-btn">LOGIN</button>
+        <RouterLink to="/signup" id="signup">
+          <button class="signup-btn">SIGN UP</button>
+        </RouterLink>
       </div>
-  </div>
-</template>
-
-<script>
-export default {
-  name: 'MyComponent',
-
-  data() {
+    </div>
+  </template>
+  
+  <script>
+  export default {
+    name: 'MyComponent',
+  
+    data() {
       return {
-          email: '',
-          password: '',
-          errorMessage: '' 
+        email: '',
+        password: '',
+        errors: [],
+        loginError: ''
       };
-  },
+    },
+  
+    methods: {
+        login() {
 
-  methods: {
-      login() {
-          fetch('http://127.0.0.1:8000/api/login', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                  email: this.email,
-                  password: this.password,
-              }),
-          }).then(response => {
-              if (response.status === 200) {
-                  return response.json();
-              } else {
-                  throw new Error('Failed to login');
-              }
-          }).then(data => {
-              if (data.status === true) {
-                  localStorage.setItem('userToken', data.token);
-                  this.$router.push({ name: 'home' });
-              } else {
-                  this.errorMessage = data.message; 
-              }
-          }).catch(error => {
-              console.log(error);
-              this.errorMessage = "Login failed: " + error.message; 
-          });
-      }
-  }
-};
-</script>
+            this.errors = [];
+            this.loginError = ''; 
+
+            if (!this.email) {
+              this.errors.push('Email field must be filled');
+            }
+            if (!this.password) {
+              this.errors.push('Password field must be filled');
+            }
+            if (this.errors.length === 0) {
+              fetch('http://127.0.0.1:8000/api/login', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                      email: this.email,
+                      password: this.password,
+                  }),
+              }).then(response => {
+                  if (response.status === 200) {
+                      return response.json();
+                  } else {
+                      throw new Error('Failed to login');
+                  }
+              }).then(data => {
+                  if (data.status === true) {
+                      localStorage.setItem('userToken', data.token);
+                      this.$router.push({ name: 'home' });
+                  } else {
+                      this.loginError = data.message;
+                  }
+              }).catch(error => {
+                  console.log(error);
+                  this.loginError = "Login failed: " + error.message;
+              });
+            }
+        }
+    }
+  };
+  </script>
+
 
 <style scoped>
 .error-message {

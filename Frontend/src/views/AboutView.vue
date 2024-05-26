@@ -301,4 +301,13 @@ button:hover{
   box-shadow: 0 0 30px #4a0000;
 }
 
+input , textarea{
+    border-radius: 4%;
+    background-color: rgba(3, 3, 3, 0.45);
+    border: none;
+    color: rgb(255, 255, 255);
+    height: 40px;
+    width: 250px;
+}
+
   </style>
