@@ -20,7 +20,8 @@ Route::group(['middleware' => ['auth:api', 'CheckRole:admin']], function () {
     
     // Awards routes
     Route::put('/awards/{id}', [AwardController::class, 'update']);
-    Route::delete('/awards/{id}', [AwardController::class, 'destroy']); // Assuming destroy method exists
+    Route::delete('/awards/{id}', [AwardController::class, 'destroy']);
+    Route::post('/awards', [AwardController::class, 'store']); 
 
     // Member routes
     Route::put('/members/{id}', [MemberController::class, 'update']);

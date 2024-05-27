@@ -19,4 +19,17 @@ class AwardController extends Controller
 
         return response()->json(['message' => 'Award updated successfully']);
     }
+
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string',
+            'date' => 'required|date',
+            'description' => 'required|string'
+        ]);
+
+        $award = Award::create($validatedData);
+
+        return response()->json(['message' => 'Award created successfully', 'award' => $award]);
+    }
 }

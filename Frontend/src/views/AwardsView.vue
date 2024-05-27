@@ -4,10 +4,27 @@
     <div>
       <div class="content">
         <h1>AWARDS</h1>
+        <div v-if="isAdmin">
+          <button @click="toggleAddAwardForm">Add New Award</button>
+          <div v-if="showAddAwardForm" class="add-award-form">
+            <h2>Add New Award</h2>
+            <form @submit.prevent="addAward">
+              <label for="name">Name:</label>
+              <input v-model="newAward.name" id="name" required>
+              <label for="date">Date:</label>
+              <input v-model="newAward.date" type="date" id="date" required>
+              <label for="description">Description:</label>
+              <textarea v-model="newAward.description" id="description" required></textarea>
+              <button type="submit">Save</button>
+              <button @click="cancelAdd">Cancel</button>
+            </form>
+          </div>
+        </div>
         <div class="awards">
           <div v-for="award in awards" :key="award.id" class="award">
             <div class="award-pic">
-              <img :src="getImagePath(award.image.filepath)" alt="Award Picture">
+              <!-- Fetching image path based on image_id -->
+              <img :src="getAwardImagePath(3)" alt="Award Picture">
             </div>
             <div class="award-text">
               <h2>{{ award.name }}</h2>
@@ -51,6 +68,12 @@ export default {
       awards: [],
       selectedAward: null,
       isAdmin: false,
+      showAddAwardForm: false,
+      newAward: {
+        name: '',
+        date: '',
+        description: ''
+      }
     };
   },
   mounted() {
@@ -71,8 +94,19 @@ export default {
         console.error('Error fetching awards:', error);
       }
     },
-    getImagePath(filepath) {
-      return `http://localhost:8000/${filepath}`;
+    async getAwardImagePath(imageId) {
+      try {
+        const token = localStorage.getItem('userToken');
+        const response = await axios.get(`/images/${imageId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        return response.data.path; // Assuming the image path is returned in the 'path' field of the response
+      } catch (error) {
+        console.error('Error fetching image:', error);
+        return ''; // Return an empty string or a default image path in case of an error
+      }
     },
     editAward(award) {
       this.selectedAward = { ...award };
@@ -102,13 +136,30 @@ export default {
             Authorization: `Bearer ${token}`
           }
         });
-        console.log(response.data);
         this.isAdmin = response.data.data.role === 'admin';
-        console.log(this.isAdmin)
       } catch (error) {
         console.error('Error checking admin role:', error);
       }
-    }
+    },
+    toggleAddAwardForm() {
+      this.showAddAwardForm = !this.showAddAwardForm;
+    },
+    async addAward() {
+      try {
+        const token = localStorage.getItem('userToken');
+        await axios.post('/awards', this.newAward, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+
+        this.fetchAwards();
+        this.newAward = { name: '', date: '', description: '' };
+        this.showAddAwardForm = false;
+      } catch (error) {
+        console.error('Error adding award:', error);
+      }
+    },
   }
 };
 </script>

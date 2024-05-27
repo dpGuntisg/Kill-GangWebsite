@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
-use App\Models\Image;
+
 
 class ProductController extends Controller
 {
@@ -31,7 +31,7 @@ class ProductController extends Controller
         // Sorting
         $query->orderBy($sortKey, $sortOrder);
 
-        $products = $query->with('image')->get();
+        $products = $query->get();
 
         return response()->json($products, 200);
     }
@@ -42,7 +42,6 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:4096',
             'price' => 'required|numeric|between:0,999999.99',
-            'image_id' => 'nullable|exists:images,id'
         ]);
 
         try {
@@ -65,7 +64,6 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:4096',
             'price' => 'required|numeric|between:0,999999.99',
-            'image_id' => 'nullable|exists:images,id'
         ]);
 
         try {

@@ -25,7 +25,7 @@
         <input type="number" v-model.number="maxPrice" @input="fetchProducts" />
       </div>
       <div v-if="isAdmin">
-        <button @click="toggleAddProductForm">Add New Product</button>
+        <button class="admin-btns" @click="toggleAddProductForm">Add New Product</button>
         <div v-if="showAddProductForm" class="add-product-form">
           <form @submit.prevent="addProduct">
             <label for="name">Name:</label>
@@ -34,9 +34,7 @@
             <textarea v-model="newProduct.description" required></textarea>
             <label for="price">Price:</label>
             <input type="number" v-model.number="newProduct.price" required />
-            <label for="image_id">Image ID:</label>
-            <input type="number" v-model.number="newProduct.image_id" required />
-            <button type="submit">Add Product</button>
+            <button class="admin-btns" type="submit">Add Product</button>
           </form>
         </div>
       </div>
@@ -47,10 +45,10 @@
             <h2>{{ product.name }}</h2>
             <p class="price">{{ formatCurrency(product.price) }}</p>
             <p class="description">{{ product.description }}</p>
-            <button @click="addToCart(product)">Add to Cart</button>
+            <button class="addToCart-btn" @click="addToCart(product)">Add to Cart</button>
             <div v-if="isAdmin">
-              <button @click="editProduct(product)">Edit</button>
-              <button @click="deleteProduct(product)">Delete</button>
+              <button class="admin-btns" @click="editProduct(product)">Edit</button>
+              <button class="admin-btns" @click="deleteProduct(product)">Delete</button>
               <div v-if="selectedProduct && selectedProduct.id === product.id">
                 <form @submit.prevent="updateProduct">
                   <label for="editName">Name:</label>
@@ -59,10 +57,8 @@
                   <textarea v-model="selectedProduct.description" required></textarea>
                   <label for="editPrice">Price:</label>
                   <input type="number" v-model.number="selectedProduct.price" required />
-                  <label for="editImage">Image ID:</label>
-                  <input type="number" v-model.number="selectedProduct.image_id" />
-                  <button type="submit">Save</button>
-                  <button type="button" @click="cancelEdit">Cancel</button>
+                  <button class="admin-btns" type="submit">Save</button>
+                  <button class="admin-btns" type="button" @click="cancelEdit">Cancel</button>
                 </form>
               </div>
             </div>
@@ -240,9 +236,16 @@ export default {
 
 <style scoped>
 .content {
-  max-width: 1200px;
-  margin: 0 auto;
-  text-align: center;
+  background-color: #00000026;
+  margin-left: 10%;
+  text-align: left;
+  max-width: 80%;
+  padding: 0 20px;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .filter-button {
@@ -292,7 +295,7 @@ export default {
   object-fit: cover;
 }
 
-button {
+.addToCart-btn {
   height: 30px;
   border: none;
   outline: 0;
@@ -302,6 +305,20 @@ button {
   color: aliceblue;
   position: absolute;
   bottom: 0;
+}
+
+.admin-btns{
+  border-radius: 4%;
+  background-color: rgba(3, 3, 3, 0.45);
+  width: 90px;
+  border-radius: 5px;
+  color: #ffffff;
+  background-color: #4a0000;
+  border: none;
+  cursor: pointer;
+  padding: 8px 0px;
+  transition: background-color 0.2s ease-in;
+  margin: 0 5px;
 }
 
 button:hover, .card:hover {
@@ -332,25 +349,21 @@ button:hover, .card:hover {
   }
 }
 
-@media screen and (max-width: 1300px) {
-  .container {
-    max-width: none;
-    margin-left: 0;
-    margin-right: 0;
-    height: 100vh;
-  }
-
-  h1 {
-    margin-top: 70px;
-  }
+input {
+    border-radius: 4%;
+    background-color: rgba(3, 3, 3, 0.45);
+    border: none;
+    color: rgb(156, 154, 154);
+    height: 40px;
+    width: 250px;
+}
+textarea{
+    border-radius: 4%;
+    background-color: rgba(3, 3, 3, 0.45);
+    border: none;
+    color: rgb(156, 154, 154);
+    height: 40px;
+    width: 250px;
 }
 
-@media screen and (max-width: 768px) {
-  .container {
-    height: 100%;
-    margin-left: 0;
-    margin-right: 0;
-    width: 100%;
-  }
-}
 </style>

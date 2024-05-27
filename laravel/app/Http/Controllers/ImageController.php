@@ -26,4 +26,5 @@ class ImageController extends Controller {
         return response()->json(['message' => 'Image uploaded successfully', 'image' => $imageModel]);
     }
 
+
 }
