@@ -9,40 +9,49 @@ use App\Http\Controllers\AwardController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\Api\MemberController;
 
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum');
-
-// Syntax <URL>/api/register
-
 // Open Routes
-Route::post("register", [UserController::class, "register"]);
-Route::post("login", [UserController::class, "login"]);
+Route::post('register', [UserController::class, 'register']);
+Route::post('login', [UserController::class, 'login']);
 
-// Protected Routes
-
+// Protected Routes for Admin
 Route::group(['middleware' => ['auth:api', 'CheckRole:admin']], function () {
-    // Admin-specific routes here
+    // Image upload
     Route::post('/upload', [ImageController::class, 'upload']);
+    
+    // Awards routes
     Route::put('/awards/{id}', [AwardController::class, 'update']);
+    Route::delete('/awards/{id}', [AwardController::class, 'destroy']); // Assuming destroy method exists
+
+    // Member routes
     Route::put('/members/{id}', [MemberController::class, 'update']);
     Route::delete('/members/{id}', [MemberController::class, 'destroy']); 
+
+    // Product routes
+    Route::post('products', [ProductController::class, 'store']);
+    Route::put('products/{id}', [ProductController::class, 'update']);
+    Route::delete('products/{id}', [ProductController::class, 'destroy']);
 });
 
-Route::group([
-    "middleware" => ["auth:api"]
-], function(){
-    Route::delete("delete",[UserController::class, "delete"]);
-    Route::get("profile", [UserController::class, "profile"]);
-    Route::put("profile", [UserController::class, "update"]);
-    Route::get("logout", [UserController::class, "logout"]);
-    Route::post("logout", [UserController::class, "logout"]);
+// Protected Routes for Authenticated Users
+Route::group(['middleware' => ['auth:api']], function () {
+    // User routes
+    Route::delete('delete', [UserController::class, 'delete']);
+    Route::get('profile', [UserController::class, 'profile']);
+    Route::put('profile', [UserController::class, 'update']);
+    Route::post('logout', [UserController::class, 'logout']);
+
+    // Product routes (Read-only)
     Route::get('products', [ProductController::class, 'index']);
-    Route::post('products', [ProductController::class, 'store']);
+    
+    // Cart routes
     Route::post('cart', [CartController::class, 'addToCart']);
     Route::get('cart', [CartController::class, 'getCartItems']);
     Route::delete('cart/{id}', [CartController::class, 'removeFromCart']);
     Route::get('cart/total', [CartController::class, 'getTotal']);
+
+    // Awards routes
     Route::get('awards', [AwardController::class, 'index']);
+
+    // Member routes
     Route::get('members', [MemberController::class, 'index']);
 });

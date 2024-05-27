@@ -24,14 +24,48 @@
         <label for="maxPrice">Max Price:</label>
         <input type="number" v-model.number="maxPrice" @input="fetchProducts" />
       </div>
+      <div v-if="isAdmin">
+        <button @click="toggleAddProductForm">Add New Product</button>
+        <div v-if="showAddProductForm" class="add-product-form">
+          <form @submit.prevent="addProduct">
+            <label for="name">Name:</label>
+            <input v-model="newProduct.name" required />
+            <label for="description">Description:</label>
+            <textarea v-model="newProduct.description" required></textarea>
+            <label for="price">Price:</label>
+            <input type="number" v-model.number="newProduct.price" required />
+            <label for="image_id">Image ID:</label>
+            <input type="number" v-model.number="newProduct.image_id" required />
+            <button type="submit">Add Product</button>
+          </form>
+        </div>
+      </div>
       <div class="shop">
         <div v-for="product in products" :key="product.id" class="product">
           <div class="card">
-            <img :src="product.image" alt="Product image">
+            <img :src="getImagePath(product.image?.filepath)" alt="Product image">
             <h2>{{ product.name }}</h2>
             <p class="price">{{ formatCurrency(product.price) }}</p>
             <p class="description">{{ product.description }}</p>
             <button @click="addToCart(product)">Add to Cart</button>
+            <div v-if="isAdmin">
+              <button @click="editProduct(product)">Edit</button>
+              <button @click="deleteProduct(product)">Delete</button>
+              <div v-if="selectedProduct && selectedProduct.id === product.id">
+                <form @submit.prevent="updateProduct">
+                  <label for="editName">Name:</label>
+                  <input v-model="selectedProduct.name" required />
+                  <label for="editDescription">Description:</label>
+                  <textarea v-model="selectedProduct.description" required></textarea>
+                  <label for="editPrice">Price:</label>
+                  <input type="number" v-model.number="selectedProduct.price" required />
+                  <label for="editImage">Image ID:</label>
+                  <input type="number" v-model.number="selectedProduct.image_id" />
+                  <button type="submit">Save</button>
+                  <button type="button" @click="cancelEdit">Cancel</button>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -56,12 +90,21 @@ export default {
       sortOrder: 'asc',
       minPrice: 0,
       maxPrice: 999999.99,
-      filtersVisible: false,
       showCartNotification: false,
+      isAdmin: false, // Admin status
+      filtersVisible: false,
+      newProduct: {
+        name: '',
+        description: '',
+        price: null,
+      },
+      showAddProductForm: false,
+      selectedProduct: null,
     };
   },
   mounted() {
     this.fetchProducts();
+    this.checkAdmin(); // Check admin status
   },
   methods: {
     async fetchProducts() {
@@ -76,10 +119,13 @@ export default {
             sortKey: this.sortKey,
             sortOrder: this.sortOrder,
             minPrice: this.minPrice,
-            maxPrice: this.maxPrice
-          }
+            maxPrice: this.maxPrice,
+          },
         });
-        this.products = response.data;
+        this.products = response.data.map(product => ({
+          ...product,
+          price: parseFloat(product.price) // Ensure price is a number
+        }));
       } catch (error) {
         console.error('Error fetching products:', error);
       }
@@ -87,92 +133,126 @@ export default {
     async addToCart(product) {
       try {
         const token = localStorage.getItem('userToken');
-        const response = await axios.post('/cart', {
-          product_id: product.id,
-          quantity: 1 
+        await axios.post('/cart', { product_id: product.id }, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        this.showCartNotification = true;
+        setTimeout(() => {
+          this.showCartNotification = false;
+        }, 3000);
+      } catch (error) {
+        console.error('Error adding to cart:', error);
+      }
+    },
+    toggleFilters() {
+      this.filtersVisible = !this.filtersVisible;
+    },
+    formatCurrency(value) {
+      if (typeof value !== 'number') {
+        console.error('Value is not a number:', value);
+        return '$0.00';
+      }
+      return `$${value.toFixed(2)}`;
+    },
+    async addProduct() {
+      try {
+        const token = localStorage.getItem('userToken');
+        await axios.post('/products', this.newProduct, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+
+        this.fetchProducts();
+        this.newProduct = {
+          name: '',
+          description: '',
+          price: null,
+        };
+        this.showAddProductForm = false;
+      } catch (error) {
+        console.error('Error adding product:', error);
+      }
+    },
+    getImagePath(filepath) {
+      return filepath ? `/storage/${filepath}` : '';
+    },
+    toggleAddProductForm() {
+      this.showAddProductForm = !this.showAddProductForm;
+    },
+    editProduct(product) {
+      this.selectedProduct = { ...product, newImage: null }; // Initialize newImage field to null
+    },
+    async updateProduct() {
+      try {
+        const token = localStorage.getItem('userToken');
+        await axios.put(`/products/${this.selectedProduct.id}`, {
+          name: this.selectedProduct.name,
+          description: this.selectedProduct.description,
+          price: this.selectedProduct.price,
+          image_id: this.selectedProduct.image_id // Use existing image ID
         }, {
           headers: {
             Authorization: `Bearer ${token}`
           }
         });
-        console.log('Product added to cart:', response.data);
-        this.showCartNotification = true;
-        setTimeout(() => {
-          this.showCartNotification = false; 
-        }, 1000);
+
+        this.fetchProducts();
+        this.selectedProduct = null;
       } catch (error) {
-        console.error('Error adding to cart:', error);
+        console.error('Error updating product:', error);
       }
-},
-    formatCurrency(value) {
-      return `$${parseFloat(value).toFixed(2)}`;
     },
-    toggleFilters() {
-      this.filtersVisible = !this.filtersVisible;
-    }
-  }
+    async deleteProduct(product) {
+      try {
+        const token = localStorage.getItem('userToken');
+        await axios.delete(`/products/${product.id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        this.fetchProducts();
+      } catch (error) {
+        console.error('Error deleting product:', error);
+      }
+    },
+    cancelEdit() {
+      this.selectedProduct = null;
+    },
+    async checkAdmin() {
+      try {
+        const token = localStorage.getItem('userToken');
+        const response = await axios.get('/profile', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        this.isAdmin = response.data.data.role === 'admin';
+      } catch (error) {
+        console.error('Error checking admin role:', error);
+      }
+    },
+  },
 };
 </script>
 
 <style scoped>
-
-input {
-    border-radius: 4%;
-    background-color: rgba(3, 3, 3, 0.45);
-    border: none;
-    color: rgb(156, 154, 154);
-    height: 40px;
-    width: 250px;
-}
-
-select {
-  border-radius: 4%;
-  background-color: rgba(3, 3, 3, 0.45);
-  border: none;
-  color: white;
-  height: 40px;
-  width: 250px;
-}
-
 .content {
-  background-color: #00000026;
-  margin-left: 10%;
-  text-align: left;
-  max-width: 80%;
-  padding: 0 20px;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-
-h1 {
-  margin-top: 50px;
-  position: relative;
-  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .filter-button {
-  width: 100%;
-  margin-bottom: 20px;
-  padding: 10px 20px;
-  background-color: black;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-.filter-button:hover {
-  opacity: 0.7;
+  margin: 20px;
 }
 
 .filters {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   margin-bottom: 20px;
-  width: 100%;
 }
 
 .filters input, .filters select {
