@@ -22,10 +22,10 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        $this->call(ImagesTableSeeder::class); 
+        $this->call(ImagesSeeder::class); 
         $this->call(AdminUserSeeder::class); 
-        $this->call(AwardsTableSeeder::class); 
-        $this->call(MembersTableSeeder::class); 
+        $this->call(AwardsSeeder::class); 
+        $this->call(MemberSeeder::class); 
 
         User::factory()->create([
             'name' => 'Test User',

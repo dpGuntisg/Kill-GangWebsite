@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class AwardsTableSeeder extends Seeder
+class AwardsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
