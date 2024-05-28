@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\AwardController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\Api\MemberController;
+use App\Http\Controllers\api\YoutubeLinkController;
 
 // Open Routes
 Route::post('register', [UserController::class, 'register']);
@@ -32,6 +33,10 @@ Route::group(['middleware' => ['auth:api', 'CheckRole:admin']], function () {
     Route::post('products', [ProductController::class, 'store']);
     Route::put('products/{id}', [ProductController::class, 'update']);
     Route::delete('products/{id}', [ProductController::class, 'destroy']);
+
+    // Youtube/Home page routes
+
+    Route::put('/youtube-link', [YoutubeLinkController::class, 'updateYoutubeLink'])->middleware('auth:api');
 });
 
 // Protected Routes for Authenticated Users
@@ -56,5 +61,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 
     // Member routes
     Route::get('members', [MemberController::class, 'index']);
-    
+    // Youtube/Home page routes
+    Route::get('/youtube-link', [YoutubeLinkController::class, 'getYoutubeLink']);
+
 });
