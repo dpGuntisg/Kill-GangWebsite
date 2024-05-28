@@ -23,8 +23,7 @@
         <div class="awards">
           <div v-for="award in awards" :key="award.id" class="award">
             <div class="award-pic">
-              <!-- Fetching image path based on image_id -->
-              <img :src="getAwardImagePath(3)" alt="Award Picture">
+              <img :src="getImagePath(award.image.filepath)" alt="Award Picture">'
             </div>
             <div class="award-text">
               <h2>{{ award.name }}</h2>
@@ -94,20 +93,6 @@ export default {
         console.error('Error fetching awards:', error);
       }
     },
-    async getAwardImagePath(imageId) {
-      try {
-        const token = localStorage.getItem('userToken');
-        const response = await axios.get(`/images/${imageId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        return response.data.path; // Assuming the image path is returned in the 'path' field of the response
-      } catch (error) {
-        console.error('Error fetching image:', error);
-        return ''; // Return an empty string or a default image path in case of an error
-      }
-    },
     editAward(award) {
       this.selectedAward = { ...award };
     },
@@ -143,6 +128,9 @@ export default {
     },
     toggleAddAwardForm() {
       this.showAddAwardForm = !this.showAddAwardForm;
+    },
+    getImagePath(filepath) {
+      return `http://localhost:8000/${filepath}`;
     },
     async addAward() {
       try {
