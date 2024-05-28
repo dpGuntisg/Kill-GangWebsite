@@ -24,8 +24,9 @@ Route::group(['middleware' => ['auth:api', 'CheckRole:admin']], function () {
     Route::post('/awards', [AwardController::class, 'store']); 
 
     // Member routes
+    Route::post('/members', [MemberController::class, 'store']);
     Route::put('/members/{id}', [MemberController::class, 'update']);
-    Route::delete('/members/{id}', [MemberController::class, 'destroy']); 
+    Route::delete('/members/{id}', [MemberController::class, 'destroy']);
 
     // Product routes
     Route::post('products', [ProductController::class, 'store']);
@@ -55,4 +56,5 @@ Route::group(['middleware' => ['auth:api']], function () {
 
     // Member routes
     Route::get('members', [MemberController::class, 'index']);
+    
 });

@@ -28,6 +28,9 @@ class AwardController extends Controller
             'description' => 'required|string'
         ]);
 
+        // Assign the default image when creating an award.
+        $validatedData['image_id'] = 9;
+
         $award = Award::create($validatedData);
 
         return response()->json(['message' => 'Award created successfully', 'award' => $award]);

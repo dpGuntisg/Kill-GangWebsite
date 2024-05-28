@@ -28,4 +28,19 @@ class MemberController extends Controller
 
         return response()->json(['message' => 'Member deleted successfully']);
     }
+
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+        ]);
+
+        
+        $validatedData['image_id'] = 8;
+
+        $member = Member::create($validatedData);
+
+        return response()->json(['message' => 'Member created successfully', 'member' => $member]);
+    }
 }

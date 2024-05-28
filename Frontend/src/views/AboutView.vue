@@ -3,7 +3,6 @@
     <navbar></navbar>
     <div class="text-div">
       <div class="text-box">
-
         <h1 class="kill-gang">KILL GANG</h1>
         <p>At Kill Gang, we're passionate about a diverse range of interests that bring together the best of the digital age.
           Our organization is committed to fostering creativity, entertainment, and innovation across various domains, making us a dynamic force in the modern world.</p>
@@ -11,7 +10,6 @@
         <ul>
           <li class="list"> <strong>E-Sports:</strong> We are avid supporters of the e-sports industry, where gamers showcase their skills and compete at the highest level. 
             We believe in the power of competitive gaming to build communities, connect people, and drive the evolution of digital sports. </li>
-
         </ul>
       </div>
       <h1 class="members">MEMBERS</h1>
@@ -40,6 +38,20 @@
           </div>
         </div>
       </div>
+      <div v-if="isAdmin">
+        <button @click="toggleAddMemberForm">Add New Member</button>
+        <div v-if="showAddMemberForm" class="add-member-form">
+          <h2>Add New Member</h2>
+          <form @submit.prevent="addMember">
+            <label for="name">Name:</label>
+            <input v-model="newMember.name" id="name" required>
+            <label for="description">Description:</label>
+            <textarea v-model="newMember.description" id="description" required></textarea>
+            <button type="submit">Save</button>
+            <button type="button" @click="cancelAdd">Cancel</button>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -58,6 +70,11 @@ export default {
       members: [],
       selectedMember: null,
       isAdmin: false,
+      showAddMemberForm: false,
+      newMember: {
+        name: '',
+        description: '',
+      },
     };
   },
   mounted() {
@@ -89,6 +106,24 @@ export default {
         this.isAdmin = response.data.data.role === 'admin';
       } catch (error) {
         console.error('Error checking admin role:', error);
+      }
+    },
+    toggleAddMemberForm() {
+      this.showAddMemberForm = !this.showAddMemberForm;
+    },
+    async addMember() {
+      try {
+        const token = localStorage.getItem('userToken');
+        await axios.post('/members', this.newMember, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        this.fetchMembers();
+        this.newMember = { name: '', description: '' };
+        this.showAddMemberForm = false;
+      } catch (error) {
+        console.error('Error adding member:', error);
       }
     },
     editMember(member) {
@@ -127,8 +162,12 @@ export default {
         console.error('Error deleting member:', error);
       }
     },
-    getImagePath(filepath) {
-      return `http://localhost:8000/${filepath}`;
+    getImagePath(filename) {
+      return `http://localhost:8000/images/${filename}`;
+    },
+    cancelAdd() {
+      this.showAddMemberForm = false;
+      this.newMember = { name: '', description: '' };
     }
   }
 };
