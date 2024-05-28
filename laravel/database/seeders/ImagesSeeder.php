@@ -32,8 +32,8 @@ class ImagesSeeder extends Seeder
             ],
             [
                 'id' => 3,
-                'filename' => 'keving.jpg',
-                'filepath' => 'storage/images/keving.jpg',
+                'filename' => 'kevin.jpg',
+                'filepath' => 'storage/images/kevin.jpg',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

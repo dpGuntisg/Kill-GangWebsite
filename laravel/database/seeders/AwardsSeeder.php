@@ -17,9 +17,9 @@ class AwardsSeeder extends Seeder
         DB::table('awards')->insert([
             'id' => 1,
             'name' => '2022 KAINDORF SPRING GAMES',
-            'date' => '2022-05-01', // Adjust the date format as needed
+            'date' => '2022-05-01',
             'description' => 'VERY COOL GAME',
-            'image_id' => 1, // Assuming the image_id corresponds to the image with ID 1
+            'image_id' => 9,
             'created_at' => now(),
             'updated_at' => now(),
         ]);

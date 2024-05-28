@@ -35,4 +35,12 @@ class AwardController extends Controller
 
         return response()->json(['message' => 'Award created successfully', 'award' => $award]);
     }
+
+    public function destroy($id)
+    {
+        $member = Award::findOrFail($id);
+        $member->delete();
+
+        return response()->json(['message' => 'Award deleted successfully']);
+    }
 }

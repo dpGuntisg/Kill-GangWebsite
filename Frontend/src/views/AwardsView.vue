@@ -23,7 +23,7 @@
         <div class="awards">
           <div v-for="award in awards" :key="award.id" class="award">
             <div class="award-pic">
-              <img :src="getImagePath(award.image.filepath)" alt="Award Picture">'
+              <img :src="getImagePath(award.image.filepath)" alt="Award Picture">
             </div>
             <div class="award-text">
               <h2>{{ award.name }}</h2>
@@ -31,6 +31,7 @@
               <p class="description">{{ award.description }}</p>
               <div v-if="isAdmin">
                 <button @click="editAward(award)">Edit</button>
+                <button @click="deleteAward(award)">Delete</button>
               </div>
             </div>
           </div>
@@ -148,9 +149,23 @@ export default {
         console.error('Error adding award:', error);
       }
     },
+    async deleteAward(award) {
+      try {
+        const token = localStorage.getItem('userToken');
+        await axios.delete(`/awards/${award.id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        this.fetchAwards(); 
+      } catch (error) {
+        console.error('Error deleting award:', error);
+      }
+    },
   }
 };
 </script>
+
 
 <style scoped>
 @media screen and (max-width: 768px) {
