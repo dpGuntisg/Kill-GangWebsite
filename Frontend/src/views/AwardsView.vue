@@ -190,7 +190,7 @@ export default {
     text-align: left;
     padding: 0 20px;
     width: 80%;
-    height: 100vh;
+    height: 100%;
     margin-left: 10%;
   }
 }
