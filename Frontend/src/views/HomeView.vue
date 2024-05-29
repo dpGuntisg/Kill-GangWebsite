@@ -5,17 +5,23 @@
       <h1>NEWEST KILL GANG CONTENT</h1>
       <div class="Video-box">
         <div class="video-container">
-          <vue-plyr :options="options">
-            <div class="plyr__video-embed">
-              <iframe
-                :src="youtubeVideoUrl"
-                allowfullscreen
-                allowtransparency
-                allow="autoplay"
-                @error="handleIframeError"
-              ></iframe>
-            </div>
-          </vue-plyr>
+          <div v-if="canEmbed" class="embed-wrapper">
+            <vue-plyr :options="options">
+              <div class="plyr__video-embed">
+                <iframe
+                  :src="youtubeEmbedUrl"
+                  allowfullscreen
+                  allowtransparency
+                  allow="autoplay"
+                  @error="handleIframeError"
+                ></iframe>
+              </div>
+            </vue-plyr>
+          </div>
+          <div v-else class="video-fallback" @click="openInNewTab">
+            <img :src="thumbnailUrl" alt="Video thumbnail" />
+            <p>Click to watch on YouTube</p>
+          </div>
         </div>
         <div class="comment-container">
           <comment-section class="CommentSection" />
@@ -44,14 +50,17 @@ export default {
   name: 'HomeView',
   components: {
     Navbar,
-    VuePlyr,
+    VuePlyr
   },
   data() {
     return {
-      youtubeVideoUrl: '',
+      youtubeLink: '',
+      youtubeEmbedUrl: '',
+      thumbnailUrl: '',
       options: {},
       isAdmin: false,
-      newYoutubeLink: ''
+      newYoutubeLink: '',
+      canEmbed: true,
     };
   },
   mounted() {
@@ -67,8 +76,9 @@ export default {
             Authorization: `Bearer ${token}`
           }
         });
-        this.youtubeVideoUrl = response.data.youtubeLink;
-        this.newYoutubeLink = this.youtubeVideoUrl;
+        this.youtubeLink = response.data.youtubeLink;
+        this.youtubeEmbedUrl = this.getEmbedUrl(this.youtubeLink);
+        this.thumbnailUrl = this.getThumbnailUrl(this.youtubeLink);
       } catch (error) {
         console.error('Error fetching YouTube link:', error);
         if (error.response && error.response.status === 401) {
@@ -100,7 +110,9 @@ export default {
             Authorization: `Bearer ${token}`
           }
         });
-        this.youtubeVideoUrl = this.newYoutubeLink;
+        this.youtubeLink = this.newYoutubeLink;
+        this.youtubeEmbedUrl = this.getEmbedUrl(this.newYoutubeLink);
+        this.thumbnailUrl = this.getThumbnailUrl(this.newYoutubeLink);
       } catch (error) {
         console.error('Error updating YouTube link:', error);
         if (error.response && error.response.status === 401) {
@@ -108,12 +120,29 @@ export default {
         }
       }
     },
+    getEmbedUrl(link) {
+      const videoId = this.extractVideoId(link);
+      return `https://www.youtube.com/embed/${videoId}`;
+    },
+    getThumbnailUrl(link) {
+      const videoId = this.extractVideoId(link);
+      return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+    },
+    extractVideoId(link) {
+      const regex = /(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+      const match = link.match(regex);
+      return match ? match[1] : '';
+    },
+    openInNewTab() {
+      window.open(this.youtubeLink, '_blank');
+    },
     handleIframeError() {
-      window.open(this.youtubeVideoUrl, '_blank');
+      this.canEmbed = false;
     }
   }
 };
 </script>
+
 <style scoped>
 h1 {
   margin-top: 50px;
@@ -132,6 +161,20 @@ h1 {
 
 .video-container {
   width: 65%;
+}
+
+.embed-wrapper {
+  width: 100%;
+}
+
+.video-fallback {
+  cursor: pointer;
+  text-align: center;
+}
+
+.video-fallback img {
+  width: 100%;
+  max-width: 600px;
 }
 
 .CommentSection {
