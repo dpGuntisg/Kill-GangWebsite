@@ -41,6 +41,8 @@ npm i
 ```
 
 ### Additional Laravel Backend Setup
+```
 php artisan db:seed --class=DatabaseSeeder
 php artisan storage:link
+```
 
