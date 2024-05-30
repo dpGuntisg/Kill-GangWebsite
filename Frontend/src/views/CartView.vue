@@ -144,4 +144,15 @@ button {
 button:hover {
   opacity: 0.7;
 }
+
+@media screen and (max-width: 768px) {
+    .content {
+      width: 100%;
+      padding: 0 20px;
+      max-width: none;
+      margin-left: 0;
+      margin-right: 0;
+      background: none;
+    }
+  }
 </style>

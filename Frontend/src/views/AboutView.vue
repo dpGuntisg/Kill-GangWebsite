@@ -1,7 +1,7 @@
 <template>
   <div>
     <navbar></navbar>
-    <div class="text-div">
+    <div class="content">
       <div class="text-box">
         <h1 class="kill-gang">KILL GANG</h1>
         <p>At Kill Gang, we're passionate about a diverse range of interests that bring together the best of the digital age.
@@ -24,14 +24,14 @@
       <div class="members-container">
         <div v-for="member in members" :key="member.id" class="member1">
           <div class="member-pfp">
-            <img :src="getImagePath(member.image.filepath)" alt="Member Profile">
+            <img :src="getImagePath(member.image.filepath)" alt="Member Profile" aria-label="Member Profile">
           </div>
           <div class="members-text">
             <h2>{{ member.name }}</h2>
             <p>{{ member.description }}</p>
             <div v-if="isAdmin">
-              <button @click="editMember(member)">Edit</button>
-              <button @click="deleteMember(member)">Delete</button>
+              <button class="editMember" @click="editMember(member)" aria-label="Edit Member">Edit</button>
+              <button class="DeleteMember" @click="deleteMember(member)" aria-label="Delete Member">Delete</button>
               <div v-if="selectedMember && selectedMember.id === member.id">
                 <form @submit.prevent="updateMember">
                   <label for="editName">Name:</label>
@@ -47,7 +47,7 @@
         </div>
       </div>
       <div v-if="isAdmin">
-        <button @click="toggleAddMemberForm">Add New Member</button>
+        <button class="addMember" @click="toggleAddMemberForm">Add New Member</button>
         <div v-if="showAddMemberForm" class="add-member-form">
           <h2>Add New Member</h2>
           <form @submit.prevent="addMember">
@@ -55,8 +55,8 @@
             <input v-model="newMember.name" id="name" required>
             <label for="description">Description:</label>
             <textarea v-model="newMember.description" id="description" required></textarea>
-            <button type="submit">Save</button>
-            <button type="button" @click="cancelAdd">Cancel</button>
+            <button class="submitButton" type="submit" aria-label="SubmitButton" >Save</button>
+            <button class="cancelButton" type="button" @click="cancelAdd" aria-label="cancelButton" >Cancel</button>
           </form>
         </div>
       </div>
@@ -180,11 +180,20 @@ export default {
   }
 };
 </script>
-  
+
 <style scoped>
+.content {
+  background-color: #00000026;
+  padding: 20px;
+  width: 80%;
+  margin: 0 auto;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
 
 @media screen and (max-width: 768px) {
-    .text-div {
+    .content {
+      width: 100%;
       padding: 0 20px;
       max-width: none;
       margin-left: none;
@@ -193,89 +202,79 @@ export default {
   
   }
 
-  @media screen and (min-width: 768px) {
-  .text-div{
-    background-color: #00000026;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: left;
-    padding: 0 20px;
-    width: 80%;
-    height: 100%;
-    margin-left: 10%;
-  }
-  .text-box{
-    width: 80%;
-  }
-
-  .text-box p{
-    text-align: center;
-    font-weight: 500;
-  }
+.kill-gang {
+  text-align: center;
+  font-weight: 800;
+  font-size: 2.5rem;
+  margin: 1rem 0;
 }
-  
-  .kill-gang {
-    margin-top: 10%;
-    text-align: center;
-    font-weight:800;
-    font-size: 70px;
-  }
-  
-  strong {
-    font-weight:650;
-  }
-  
-  .interests{
-    margin-top: 30px;
-    font-weight: 750;
-    font-size: 25px;
-    margin-bottom: 5px;
-  }
-  
-  .list {
-      margin-bottom: 10px;
-      list-style-type:disc;
-  }
-  
-  .members{
-    margin-bottom: 3vh;
-    margin-top: 10vh;
-     text-align: center;
-     font-weight:800;
-     font-size: 60px;
-  }
-  
-  
-  .members-container {
-    display: flex;
-    flex-direction: column;
-  }
 
-  .member-pfp img {
-    width: 200px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 8px;
-  }
+.editMember, .deleteMember{
+  margin-right: 5px;
+}
 
-/* asdasdasdasdasdasd */
+
+
+.text-box p {
+  text-align: center;
+  font-weight: 500;
+}
+
+.interests {
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin: 1.5rem 0 1rem;
+}
+
+.list {
+  margin-bottom: 0.5rem;
+  list-style-type: disc;
+}
+
+.members {
+  text-align: center;
+  font-weight: 800;
+  font-size: 2rem;
+  margin: 2rem 0 1rem;
+}
+
+.members-container {
+  display: flex;
+  flex-direction: column;
+}
 
 .member1 {
   display: flex;
-  flex-direction: row; 
-  flex-wrap: wrap; 
+  flex-direction: row;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.member-image {
-  width: 200px;
+.member-pfp img {
+  width: 150px;
   height: 150px;
   object-fit: cover;
   border-radius: 8px;
+  margin-right: 1rem;
 }
 
+.members-text {
+  flex: 1;
+}
+
+.members-text h2 {
+  margin: 0;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.members-text p {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+}
 
 @media screen and (max-width: 768px) {
   .member1 {
@@ -297,68 +296,48 @@ export default {
     text-align: center;
     margin-top: 20px; 
   }
+  
+
+}
+.submitButton, .cancelButton{
+  border-radius: 0;
 }
 
-
-@media screen and (min-width: 1156px) {
-
-  .member-pfp img{
-    margin-right: 2vw;
-  }
-  .member1 {
-    margin-left: 100px;
-    flex-direction: row; 
-    align-items: flex-start;
-    margin-bottom: 5vh;
-  }
-
-  .member-image {
-    width: 200px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-right: 20px;
-  }
-
-  .members-text {
-    flex: 1;
-    text-align: left;
-    margin-top: 0;
-    margin-bottom: 20px; 
-  }
+.add-member-form {
+  margin-top: 2rem;
+  background-color: #00000026;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-button {
-  border-radius: 4%;
-  background-color: rgba(3, 3, 3, 0.45);
-  width: 90px;
-  border-radius: 5px;
+.add-member-form form {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-member-form label {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.add-member-form input,
+.add-member-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ffffff;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.1);
   color: #ffffff;
-  background-color: #4a0000;
-  border: none;
-  cursor: pointer;
-  padding: 8px 0px;
-  transition: background-color 0.2s ease-in;
-  margin: 0 5px;
 }
 
-button:hover {
-  background-color: #d5d5d5;
-  box-shadow: 0 0 30px #4a0000;
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #4a0000;
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
-input {
-    border-radius: 4%;
-    background-color: rgba(3, 3, 3, 0.45);
-    border: none;
-    color: rgb(156, 154, 154);
-    height: 40px;
-    width: 250px;
-}
 
-textarea{
-  width: 5rem;
-}
-
-  </style>
+</style>
 

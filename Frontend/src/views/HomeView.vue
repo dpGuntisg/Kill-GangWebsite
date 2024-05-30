@@ -14,25 +14,32 @@
                   allowtransparency
                   allow="autoplay"
                   @error="handleIframeError"
+                  title="YouTube Video"
                 ></iframe>
               </div>
             </vue-plyr>
           </div>
-          <div v-else class="video-fallback" @click="openInNewTab">
+          <div
+            v-else
+            class="video-fallback"
+            @click="openInNewTab"
+            tabindex="0"
+            role="button"
+            aria-label="Watch on YouTube"
+          >
             <img :src="thumbnailUrl" alt="Video thumbnail" />
             <p>Click to watch on YouTube</p>
           </div>
         </div>
         <div class="comment-container">
-          <comment-section class="CommentSection" />
+          <comment-section class="CommentSection" aria-label="Comment Section"></comment-section>
         </div>
       </div>
       <div class="Song-Box"></div>
       <div v-if="isAdmin" class="admin-panel">
-        <h2>Admin Panel</h2>
         <form @submit.prevent="updateYoutubeLink">
           <label for="youtubeLink">YouTube Link:</label>
-          <input type="text" v-model="newYoutubeLink" />
+          <input type="text" v-model="newYoutubeLink" aria-label="YouTube Link" />
           <button type="submit">Update Link</button>
         </form>
       </div>
@@ -57,7 +64,8 @@ export default {
       youtubeLink: '',
       youtubeEmbedUrl: '',
       thumbnailUrl: '',
-      options: {},
+      options: {
+      },
       isAdmin: false,
       newYoutubeLink: '',
       canEmbed: true,
@@ -148,7 +156,7 @@ h1 {
   margin-top: 50px;
   text-align: center;
   font-weight: 800;
-  font-size: 70px;
+  font-size: 3rem;
   display: block;
 }
 
@@ -200,6 +208,7 @@ h1 {
   margin-top: 20px;
   text-align: center;
 }
+
 
 @media screen and (max-width: 1400px) {
   .content {

@@ -1,73 +1,77 @@
 <template>
   <div>
     <navbar></navbar>
-    <div class="content">
+    <main class="content">
       <h1>SHOP</h1>
-      <div v-if="showCartNotification" class="cart-notification">
+      <div v-if="showCartNotification" class="cart-notification" role="alert" aria-live="assertive">
         Item successfully added to cart!
       </div>
-      <button @click="toggleFilters" class="filter-button">Toggle Filters</button>
-      <div class="filters" v-if="filtersVisible">
-        <input v-model="searchQuery" placeholder="Search for products..." @input="fetchProducts" />
+      <button @click="toggleFilters" class="filter-button" aria-expanded="filtersVisible">
+        Toggle Filters
+      </button>
+      <div class="filters" v-if="filtersVisible && !selectedProduct">
+        <input v-model="searchQuery" placeholder="Search for products..." @input="fetchProducts" aria-label="Search for products" />
         <label for="sort">Sort by:</label>
-        <select v-model="sortKey" @change="fetchProducts">
+        <select v-model="sortKey" @change="fetchProducts" aria-label="Sort products by">
           <option value="name">Name</option>
           <option value="price">Price</option>
         </select>
         <label for="sortOrder">Order:</label>
-        <select v-model="sortOrder" @change="fetchProducts">
+        <select v-model="sortOrder" @change="fetchProducts" aria-label="Sort order">
           <option value="asc">Ascending</option>
           <option value="desc">Descending</option>
         </select>
         <label for="minPrice">Min Price:</label>
-        <input type="number" v-model.number="minPrice" @input="fetchProducts" />
+        <input type="number" step="0.01" v-model.number="minPrice" @input="fetchProducts" aria-label="Minimum price" />
         <label for="maxPrice">Max Price:</label>
-        <input type="number" v-model.number="maxPrice" @input="fetchProducts" />
+        <input type="number" step="0.01" v-model.number="maxPrice" @input="fetchProducts" aria-label="Maximum price" />
       </div>
       <div v-if="isAdmin">
-        <button class="admin-btns" @click="toggleAddProductForm">Add New Product</button>
+        <button class="addButton" @click="toggleAddProductForm">Add New Product</button>
         <div v-if="showAddProductForm" class="add-product-form">
           <form @submit.prevent="addProduct">
             <label for="name">Name:</label>
-            <input v-model="newProduct.name" required />
+            <input v-model="newProduct.name" id="name" required />
             <label for="description">Description:</label>
-            <textarea v-model="newProduct.description" required></textarea>
+            <textarea v-model="newProduct.description" id="description" required></textarea>
             <label for="price">Price:</label>
-            <input type="number" v-model.number="newProduct.price" required />
-            <button class="admin-btns" type="submit">Add Product</button>
+            <input type="number" step="0.01" v-model.number="newProduct.price" id="price" required />
+            <button class="saveButton" type="submit">Add Product</button>
+            <button class="cancelButton" type="button" @click="cancelAddProduct">Cancel</button>
           </form>
         </div>
       </div>
       <div class="shop">
         <div v-for="product in products" :key="product.id" class="product">
-          <div class="card">
-            <img :src="getImagePath(product.image?.filepath)" alt="Product image">
+          <article class="card">
+            <img v-if="product.image && product.image.filepath" :src="getImagePath(product.image?.filepath)" alt="Product image">
             <h2>{{ product.name }}</h2>
             <p class="price">{{ formatCurrency(product.price) }}</p>
             <p class="description">{{ product.description }}</p>
-            <button class="addToCart-btn" @click="addToCart(product)">Add to Cart</button>
-            <div v-if="isAdmin">
-              <button class="admin-btns" @click="editProduct(product)">Edit</button>
-              <button class="admin-btns" @click="deleteProduct(product)">Delete</button>
-              <div v-if="selectedProduct && selectedProduct.id === product.id">
-                <form @submit.prevent="updateProduct">
-                  <label for="editName">Name:</label>
-                  <input v-model="selectedProduct.name" required />
-                  <label for="editDescription">Description:</label>
-                  <textarea v-model="selectedProduct.description" required></textarea>
-                  <label for="editPrice">Price:</label>
-                  <input type="number" v-model.number="selectedProduct.price" required />
-                  <button class="admin-btns" type="submit">Save</button>
-                  <button class="admin-btns" type="button" @click="cancelEdit">Cancel</button>
-                </form>
-              </div>
+            <button v-if="!selectedProduct" class="addToCart-btn" @click="addToCart(product)">Add to Cart</button>
+            <div v-if="isAdmin && !selectedProduct" class="admin-buttons">
+              <button class="editButton" @click="editProduct(product)">Edit</button>
+              <button class="deleteButton" @click="deleteProduct(product)">Delete</button>
             </div>
-          </div>
+          </article>
+          <form v-if="selectedProduct && selectedProduct.id === product.id" class="edit-form" @submit.prevent="updateProduct">
+            <label for="editName">Name:</label>
+            <input v-model="selectedProduct.name" id="editName" required />
+            <label for="editDescription">Description:</label>
+            <textarea v-model="selectedProduct.description" id="editDescription" required></textarea>
+            <label for="editPrice">Price:</label>
+            <input type="number" step="0.01" v-model.number="selectedProduct.price" id="editPrice" required />
+            <button class="saveButton" type="submit">Save</button>
+            <button class="cancelButton" type="button" @click="cancelEdit">Cancel</button>
+          </form>
         </div>
       </div>
-    </div>
+    </main>
   </div>
 </template>
+
+
+
 
 <script>
 import Navbar from '../components/Navbar.vue';
@@ -87,7 +91,7 @@ export default {
       minPrice: 0,
       maxPrice: 999999.99,
       showCartNotification: false,
-      isAdmin: false, // Admin status
+      isAdmin: false,
       filtersVisible: false,
       newProduct: {
         name: '',
@@ -100,7 +104,7 @@ export default {
   },
   mounted() {
     this.fetchProducts();
-    this.checkAdmin(); // Check admin status
+    this.checkAdmin();
   },
   methods: {
     async fetchProducts() {
@@ -120,7 +124,7 @@ export default {
         });
         this.products = response.data.map(product => ({
           ...product,
-          price: parseFloat(product.price) // Ensure price is a number
+          price: parseFloat(product.price) 
         }));
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -230,42 +234,69 @@ export default {
         console.error('Error checking admin role:', error);
       }
     },
+    cancelAddProduct() {
+      this.showAddProductForm = false;
+    },
   },
 };
 </script>
 
+
 <style scoped>
 .content {
   background-color: #00000026;
-  margin-left: 10%;
-  text-align: left;
-  max-width: 80%;
-  padding: 0 20px;
-  height: 100vh;
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  max-width: 80%;
+  margin: 0 auto;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  height: 100vh;
+}
+
+h1 {
+  margin-top: 40px;
+  font-weight: 800;
+  font-size: 4rem;
+  color: #ffffff;
+  text-align: center;
 }
 
 .filter-button {
   margin: 20px;
+  padding: 10px 20px;
+  background-color: black;
+  color: aliceblue;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in;
+}
+
+.filter-button:hover {
+  background-color: #333;
 }
 
 .filters {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   margin-bottom: 20px;
+  gap: 10px;
 }
 
-.filters input, .filters select {
-  margin-right: 10px;
-  padding: 5px;
+.filters input,
+.filters select {
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
   flex: 1;
 }
 
 .filters label {
   margin: 5px 10px 0 0;
+  color: #ffffff;
 }
 
 .shop {
@@ -278,15 +309,23 @@ export default {
 .card {
   margin: 20px;
   position: relative;
-  outline-style: solid;
-  outline-color: black;
-  outline-width: 2px;
+  outline: 2px solid black;
   width: 300px;
   text-align: center;
-  font-family: Arial;
+  font-family: Arial, sans-serif;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   height: 400px;
+  background-color: none;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
 }
 
 .product img {
@@ -295,49 +334,18 @@ export default {
   object-fit: cover;
 }
 
-.addToCart-btn {
-  height: 30px;
-  border: none;
-  outline: 0;
-  cursor: pointer;
-  width: 100%;
-  background-color: black;
-  color: aliceblue;
-  position: absolute;
-  bottom: 0;
-}
-
-.admin-btns{
-  border-radius: 4%;
-  background-color: rgba(3, 3, 3, 0.45);
-  width: 90px;
-  border-radius: 5px;
-  color: #ffffff;
-  background-color: #4a0000;
-  border: none;
-  cursor: pointer;
-  padding: 8px 0px;
-  transition: background-color 0.2s ease-in;
-  margin: 0 5px;
-}
-
-button:hover, .card:hover {
-  opacity: 0.7;
-  box-shadow: 0 30px 30px #4a0000;
-}
-
 .cart-notification {
   position: fixed;
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: rgba(3, 3, 3, 0.45);
+  background-color: rgba(0, 0, 0, 0.7);
   color: white;
   padding: 10px 20px;
   border-radius: 5px;
   z-index: 1000;
   opacity: 0.9;
-  animation: fadeOut 3s ease-in-out; 
+  animation: fadeOut 3s ease-in-out;
 }
 
 @keyframes fadeOut {
@@ -349,21 +357,108 @@ button:hover, .card:hover {
   }
 }
 
-input {
-    border-radius: 4%;
-    background-color: rgba(3, 3, 3, 0.45);
-    border: none;
-    color: rgb(156, 154, 154);
-    height: 40px;
-    width: 250px;
-}
-textarea{
-    border-radius: 4%;
-    background-color: rgba(3, 3, 3, 0.45);
-    border: none;
-    color: rgb(156, 154, 154);
-    height: 40px;
-    width: 250px;
+select {
+  border-radius: 4px;
+  background-color: rgba(3, 3, 3, 0.45);
+  border: none;
+  color: rgb(156, 154, 154);
+  height: 40px;
+  width: 100%;
+  padding: 10px;
+  transition: background-color 0.2s ease-in, border-color 0.2s ease-in;
 }
 
+.add-product-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.add-product-form form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
+
+.add-product-form form label {
+  margin-bottom: 5px;
+  color: #ffffff;
+}
+
+.add-product-form form input,
+.add-product-form form textarea {
+  margin-bottom: 10px;
+}
+
+.add-product-form form button {
+  align-self: center;
+}
+
+@media (max-width: 768px) {
+  .content {
+    width: 100%;
+    padding: 0 20px;
+    max-width: none;
+    margin-left: none;
+    margin-right: none;
+  }
+
+  .card {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .shop {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .filters {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.addToCart-btn {
+  height: 40px;
+  border: none;
+  outline: 0;
+  cursor: pointer;
+  width: 100%;
+  background-color: black;
+  color: aliceblue;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.admin-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  margin-bottom: 40px; 
+}
+
+.admin-buttons button {
+  flex: 1;
+  margin: 5px;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #4a0000;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in;
+  z-index: 1;
+}
+
+.admin-buttons button:hover {
+  background-color: #333;
+}
+
+button:hover,
+.card:hover {
+  opacity: 0.7;
+  box-shadow: 0 30px 30px #4a0000;
+}
 </style>

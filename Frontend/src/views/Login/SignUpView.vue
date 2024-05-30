@@ -1,88 +1,117 @@
 <template>
-    <div class="content">
-      <form>
-        <h1>KILL GANG</h1>
-          <div class="input-container">
-            <input v-model="name" type="Name" class="Name" placeholder="Name" required>
-            <input v-model="email" type="email" class="Login-email" placeholder="E-mail" required>
-            <input v-model="password" type="password" class="Login-password" placeholder="Password" required>
-            <input v-model="passwordConfirmation" type="password" class="Login-password" placeholder="Confirm your password" required>
-          </div>
-      </form>
-        <div class="button-container">
-            <RouterLink to="/">
-                <button class="login-btn">LOGIN</button>
-            </RouterLink>
-            <RouterLink to="/signup" id="signup">
-                <button @click.prevent="register" class="signup-btn">SIGN UP</button>
-            </RouterLink>
-        </div>
-    </div>
-    
-  </template>
-  
-  <script>
-  import axios from 'axios';
-  
-  export default {
-    name: 'MyComponent',
-  
-    data() {
-      return {
-        name: '',
-        email: '',
-        password: '',
-        passwordConfirmation: '',
-        errorMessage: ''  // To display error message to the user
-      };
-    },
-  
-    methods: {
-      register() {
+<div class="contntent">
+  <div class="content">
+    <form @submit.prevent="register">
+      <h1>KILL GANG</h1>
+      <div class="input-container">
+        <label for="name">Name</label>
+        <input v-model="name" type="text" id="name" class="Name" placeholder="Name" required aria-required="true">
+        <div v-if="errors.includes('Name field must be filled')" class="error-message">Name field must be filled</div>
+
+        <label for="email">E-mail</label>
+        <input v-model="email" type="email" id="email" class="Login-email" placeholder="E-mail" required aria-required="true">
+        <div v-if="errors.includes('Email field must be filled')" class="error-message">Email field must be filled</div>
+
+        <label for="password">Password</label>
+        <input v-model="password" type="password" id="password" class="Login-password" placeholder="Password" required aria-required="true">
+        <div v-if="errors.includes('Password field must be filled')" class="error-message">Password field must be filled</div>
+
+        <label for="passwordConfirmation">Confirm Password</label>
+        <input v-model="passwordConfirmation" type="password" id="passwordConfirmation" class="Login-password" placeholder="Confirm Password" required aria-required="true">
+        <div v-if="errors.includes('Confirm Password field must be filled')" class="error-message">Confirm Password field must be filled</div>
+        <div v-if="errors.includes('Passwords do not match')" class="error-message">Passwords do not match</div>
+
+        <div v-if="registrationError" class="error-message">{{ registrationError }}</div>
+      </div>
+      <div class="button-container">
+        <RouterLink to="/">
+          <button type="button" class="login-btn">LOGIN</button>
+        </RouterLink>
+        <button type="submit" class="signup-btn">SIGN UP</button>
+      </div>
+    </form>
+  </div>
+</div>
+</template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  name: 'SignupComponent',
+  data() {
+    return {
+      name: '',
+      email: '',
+      password: '',
+      passwordConfirmation: '',
+      errors: [],
+      registrationError: ''
+    };
+  },
+  methods: {
+    register() {
+      this.errors = [];
+      this.registrationError = '';
+
+      if (!this.name) {
+        this.errors.push('Name field must be filled');
+      }
+      if (!this.email) {
+        this.errors.push('Email field must be filled');
+      }
+      if (!this.password) {
+        this.errors.push('Password field must be filled');
+      }
+      if (!this.passwordConfirmation) {
+        this.errors.push('Confirm Password field must be filled');
+      }
+      if (this.password && this.passwordConfirmation && this.password !== this.passwordConfirmation) {
+        this.errors.push('Passwords do not match');
+      }
+      if (this.errors.length === 0) {
         axios.post('/register', {
           name: this.name,
           email: this.email,
           password: this.password,
           password_confirmation: this.passwordConfirmation,
         })
-        .then(response => {
-          console.log('Registration successful:', response.data);
-          // Redirect or clear form here
-          this.$router.push({ name: 'login' });
-        })
-        .catch(error => {
-          console.error('Registration failed:', error.response.data);
-          this.errorMessage = error.response.data.message || 'Something went wrong';
-        });
+          .then(response => {
+            this.$router.push({ name: 'login' });
+          })
+          .catch(error => {
+            this.registrationError = error.response.data.message || 'Something went wrong';
+          });
       }
     }
   }
-  </script>
-  
-  
-  
-  <style scoped>
-  
+};
+</script>
 
+<style scoped>
+.error-message {
+  color: red;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.contntent{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 .content {
-  height: 600px;
+  height: auto;
   overflow: hidden;
-  overflow: none;
-  margin-top: 30vh;
-  margin-bottom: 30vh;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 500px;
-  flex-direction: column;
+  margin: auto;
   padding: 30px;
-  position: relative;
+  width: 100%;
+  max-width: 500px;
   background: rgba(3, 3, 3, 0.45);
   border-radius: 3%;
-  box-shadow: 10px 2px 4px rgba(0, 0, 0, 0.1);
-  -webkit-box-shadow:0px 0px 238px 70px rgba(82,10,10,1);
-  -moz-box-shadow: 0px 0px 238px 70px rgba(82,10,10,1);
-  box-shadow: 0px 0px 238px 70px rgba(82,10,10,1);
+  box-shadow: 0 0 238px 70px rgba(82, 10, 10, 1);
+  overflow: hidden;
 }
 
 h1 {
@@ -118,16 +147,14 @@ h1 {
 
 .login-btn,
 .signup-btn {
-  width: 100px ;
   border-radius: 5px;
   color: #ffffff;
-  background-color: #4a0000; 
+  background-color: #4a0000;
   border: none;
   cursor: pointer;
   padding: 10px 20px;
   transition: background-color 0.2s ease-in;
-  margin: 0 30px;
-  margin-top: 20px;
+  margin: 20px 10px;
 }
 
 .login-btn:hover,
@@ -145,18 +172,17 @@ h1 {
     width: 100%;
     font-size: 18px;
     margin-bottom: 0;
+    overflow: auto;
     }
 
     .input-container{
       margin-top: 1px;
     }
 
-    h1{
-      font-size: 50px;
-      margin-left: 33%;
-      justify-content: center;
-      align-content:center; 
-      display:flex;
+    h1 {
+      font-size: 2em;
+      font-weight: bold;
+      text-align: center;
     }
 }
 
@@ -173,6 +199,4 @@ h1 {
   display: flex;
   width: 100%;
 }
-
-
-  </style>
+</style>
