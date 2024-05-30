@@ -14,7 +14,7 @@
 Navigate to the Laravel backend directory:
 
 ```
-cd laravelBackend
+cd laravel
 cp .env.example .env
 composer install
 php artisan key:generate
