@@ -26,7 +26,7 @@ composer require laravel/telescope --dev
 php artisan telescope:install
 ```
 
-###.env file configuration
+### env file configuration
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
@@ -34,13 +34,13 @@ DB_DATABASE="db_name"
 DB_USERNAME="db_user"
 DB_PASSWORD=
 
-###Vue.js setup
+### Vue.js setup
 ```
 cd frontend
 npm i
 ```
 
-###Additional Laravel Backend Setup
+### Additional Laravel Backend Setup
 php artisan db:seed --class=DatabaseSeeder
 php artisan storage:link
 
