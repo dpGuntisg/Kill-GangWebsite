@@ -14,6 +14,17 @@ use App\Http\Controllers\api\YoutubeLinkController;
 Route::post('register', [UserController::class, 'register']);
 Route::post('login', [UserController::class, 'login']);
 
+// Product routes 
+Route::get('products', [ProductController::class, 'index']);
+ // Awards routes
+Route::get('awards', [AwardController::class, 'index']);
+
+ // Member routes
+Route::get('members', [MemberController::class, 'index']);
+ // Youtube/Home page routes
+Route::get('/youtube-link', [YoutubeLinkController::class, 'getYoutubeLink']);
+    
+
 // Protected Routes for Admin
 Route::group(['middleware' => ['auth:api', 'CheckRole:admin']], function () {
     // Image upload
@@ -47,8 +58,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::put('profile', [UserController::class, 'update']);
     Route::post('logout', [UserController::class, 'logout']);
 
-    // Product routes (Read-only)
-    Route::get('products', [ProductController::class, 'index']);
+
     
     // Cart routes
     Route::post('cart', [CartController::class, 'addToCart']);
@@ -56,12 +66,5 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::delete('cart/{id}', [CartController::class, 'removeFromCart']);
     Route::get('cart/total', [CartController::class, 'getTotal']);
 
-    // Awards routes
-    Route::get('awards', [AwardController::class, 'index']);
-
-    // Member routes
-    Route::get('members', [MemberController::class, 'index']);
-    // Youtube/Home page routes
-    Route::get('/youtube-link', [YoutubeLinkController::class, 'getYoutubeLink']);
 
 });

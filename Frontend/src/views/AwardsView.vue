@@ -52,7 +52,6 @@
   </div>
 </template>
 
-
 <script>
 import axios from 'axios';
 import Navbar from '../components/Navbar.vue';
@@ -75,19 +74,14 @@ export default {
       }
     };
   },
-  mounted() {
+  created() {
     this.fetchAwards();
     this.checkAdmin();
   },
   methods: {
     async fetchAwards() {
       try {
-        const token = localStorage.getItem('userToken');
-        const response = await axios.get('api/awards', {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
+        const response = await axios.get('api/awards');
         this.awards = response.data;
       } catch (error) {
         console.error('Error fetching awards:', error);
@@ -101,12 +95,7 @@ export default {
     },
     async updateAward() {
       try {
-        const token = localStorage.getItem('userToken');
-        await axios.put(`api/awards/${this.selectedAward.id}`, this.selectedAward, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
+        await axios.put(`api/awards/${this.selectedAward.id}`, this.selectedAward);
         this.fetchAwards();
         this.selectedAward = null;
       } catch (error) {
@@ -115,12 +104,7 @@ export default {
     },
     async checkAdmin() {
       try {
-        const token = localStorage.getItem('userToken');
-        const response = await axios.get('api/profile', {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
+        const response = await axios.get('api/profile');
         this.isAdmin = response.data.data.role === 'admin';
       } catch (error) {
         console.error('Error checking admin role:', error);
@@ -129,18 +113,15 @@ export default {
     toggleAddAwardForm() {
       this.showAddAwardForm = !this.showAddAwardForm;
     },
+        //getImagePath(filepath) {
+    //  return `https://api-12dggutmanis.kvalifikacija.rvt.lv/${filepath}`;
+    //},
     getImagePath(filepath) {
-      return `https://api-12dggutmanis.kvalifikacija.rvt.lv/${filepath}`;
+      return `http://127.0.0.1:8000/${filepath}`;
     },
     async addAward() {
       try {
-        const token = localStorage.getItem('userToken');
-        await axios.post('api/awards', this.newAward, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-
+        await axios.post('api/awards', this.newAward);
         this.fetchAwards();
         this.newAward = { name: '', date: '', description: '' };
         this.showAddAwardForm = false;
@@ -150,26 +131,21 @@ export default {
     },
     async deleteAward(award) {
       try {
-        const token = localStorage.getItem('userToken');
-        await axios.delete(`api/awards/${award.id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
+        await axios.delete(`api/awards/${award.id}`);
         this.fetchAwards(); 
       } catch (error) {
         console.error('Error deleting award:', error);
       }
     },
     cancelAdd() {
-    this.newAward = { name: '', date: '', description: '' }; 
-    this.showAddAwardForm = false; 
-  },
-    
+      this.newAward = { name: '', date: '', description: '' }; 
+      this.showAddAwardForm = false; 
+    },
   }
-  
 };
 </script>
+
+
 
 <style scoped>
 .content {

@@ -101,9 +101,8 @@ export default {
   align-items: center;
   height: 100vh;
 }
+
 .content {
-  height: auto;
-  overflow: hidden;
   margin: auto;
   padding: 30px;
   width: 100%;
@@ -115,34 +114,30 @@ export default {
 }
 
 h1 {
-    font-size: 80px;
-    font-weight: bold;
-    justify-content: center;
-    align-content:center; 
-    display:flex;
+  font-size: 2em;
+  font-weight: bold;
+  text-align: center;
 }
 
 .input-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
 }
 
-.Login-email,
-.Name,
-.Login-password {
-    border-radius: 4%;
-    background-color: rgba(3, 3, 3, 0.45); ;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border: none;
-    color: rgb(156, 154, 154);
-    height: 40px;
-    width: 250px;
-    text-indent: 10px;
-    
+label {
+  color: #ffffff;
+  margin-bottom: 5px;
+}
+
+input {
+  border-radius: 4%;
+  background-color: rgba(3, 3, 3, 0.45);
+  margin: 10px 0;
+  border: none;
+  color: rgb(156, 154, 154);
+  height: 40px;
+  padding: 10px;
 }
 
 .login-btn,
@@ -159,44 +154,25 @@ h1 {
 
 .login-btn:hover,
 .signup-btn:hover {
-    background-color: #d5d5d5;
-    box-shadow: 0 0 30px #4a0000;
+  background-color: #d5d5d5;
+  box-shadow: 0 0 30px #4a0000;
 }
 
 @media (max-width: 768px) {
-    .content {
-    margin-top: 0;
-    border-radius: 0%;
-    height: 100vh;
-    overflow: hidden;
+  .content {
     width: 100%;
-    font-size: 18px;
-    margin-bottom: 0;
-    overflow: auto;
-    }
-
-    .input-container{
-      margin-top: 1px;
-    }
-
-    h1 {
-      font-size: 2em;
-      font-weight: bold;
-      text-align: center;
-    }
+    height: 100vh;
+    border-radius: 0;
+    padding: 10px;
+    box-shadow: none;
+  }
+  h1 {
+    font-size: 1.5em;
+  }
 }
 
-@media (min-width: 1200px) {
-    .content {
-    overflow: hidden;
-    font-size: 24px;
-    }
-}
 .button-container {
-  margin: 0;
-  position: relative;
-  justify-content: center;
   display: flex;
-  width: 100%;
+  justify-content: center;
 }
 </style>

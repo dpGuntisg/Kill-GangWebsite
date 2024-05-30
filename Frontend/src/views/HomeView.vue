@@ -57,63 +57,57 @@ export default {
   name: 'HomeView',
   components: {
     Navbar,
-    VuePlyr
+    VuePlyr,
   },
   data() {
     return {
       youtubeLink: '',
       youtubeEmbedUrl: '',
       thumbnailUrl: '',
-      options: {
-      },
+      options: {},
       isAdmin: false,
       newYoutubeLink: '',
       canEmbed: true,
+      isAuthenticated: false,
     };
   },
   mounted() {
     this.fetchYoutubeLink();
-    this.checkAdmin();
+    this.checkAuthentication();
   },
   methods: {
     async fetchYoutubeLink() {
       try {
-        const token = localStorage.getItem('userToken');
-        const response = await axios.get('api/youtube-link', {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
+        //const response = await axios.get('https://api-12dggutmanis.kvalifikacija.rvt.lv/api/youtube-link');
+        const response = await axios.get('http://127.0.0.1:8000/api/youtube-link');
         this.youtubeLink = response.data.youtubeLink;
         this.youtubeEmbedUrl = this.getEmbedUrl(this.youtubeLink);
         this.thumbnailUrl = this.getThumbnailUrl(this.youtubeLink);
       } catch (error) {
         console.error('Error fetching YouTube link:', error);
-        if (error.response && error.response.status === 401) {
-          console.error('Unauthenticated: Please log in.');
-        }
       }
     },
     async checkAdmin() {
       try {
         const token = localStorage.getItem('userToken');
-        const response = await axios.get('api/profile', {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        this.isAdmin = response.data.data.role === 'admin';
+        if (token) {
+          //const response = await axios.get('https://api-12dggutmanis.kvalifikacija.rvt.lv/api/profile', {
+            const response = await axios.get('http://127.0.0.1:8000/api/profile', {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
+          this.isAdmin = response.data.data.role === 'admin';
+        }
       } catch (error) {
         console.error('Error checking admin role:', error);
-        if (error.response && error.response.status === 401) {
-          console.error('Unauthenticated: Please log in.');
-        }
       }
     },
     async updateYoutubeLink() {
       try {
         const token = localStorage.getItem('userToken');
-        await axios.put('api/youtube-link', { youtubeLink: this.newYoutubeLink }, {
+        //await axios.put('https://api-12dggutmanis.kvalifikacija.rvt.lv/api/youtube-link', { youtubeLink: this.newYoutubeLink }, {
+        await axios.put('http://127.0.0.1:8000/api/youtube-link', { youtubeLink: this.newYoutubeLink }, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -123,9 +117,6 @@ export default {
         this.thumbnailUrl = this.getThumbnailUrl(this.newYoutubeLink);
       } catch (error) {
         console.error('Error updating YouTube link:', error);
-        if (error.response && error.response.status === 401) {
-          console.error('Unauthenticated: Please log in.');
-        }
       }
     },
     getEmbedUrl(link) {
@@ -146,6 +137,13 @@ export default {
     },
     handleIframeError() {
       this.canEmbed = false;
+    },
+    checkAuthentication() {
+      const token = localStorage.getItem('userToken');
+      this.isAuthenticated = !!token;
+      if (this.isAuthenticated) {
+        this.checkAdmin();
+      }
     }
   }
 };
