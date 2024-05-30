@@ -1,3 +1,5 @@
+Labdien mani sauc es nezinu vairs man nav laika man japrogrammeee
+
 # Kill Gang
 
 ## Steks
