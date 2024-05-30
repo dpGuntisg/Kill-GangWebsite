@@ -1,17 +1,18 @@
 # Kill Gang
 
-## Stack
+## Steks
 
 - Laravel
 - Node.js
 - Vue.js 
 - MySQL
 
-## Setup
+## Setaps
 
-### Laravel Backend Setup
+### Laravel Pēcpuses Setaps
 
-Navigate to the Laravel backend directory:
+Dodies Uz Laravel Pēcpuses direktoriju:      
+es neesmu gulejis
 
 ```
 cd laravel
@@ -26,7 +27,7 @@ composer require laravel/telescope --dev
 php artisan telescope:install
 ```
 
-### env file configuration
+### Vides faila konfigurācija
 ```
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
@@ -36,13 +37,13 @@ DB_USERNAME="db_user"
 DB_PASSWORD=
 ```
 
-### Vue.js setup
+### Vū džei s setaps
 ```
 cd frontend
 npm i
 ```
 
-### Additional Laravel Backend Setup
+### Adicionāla Laravel Pēcpuses Setaps
 ```
 php artisan db:seed --class=DatabaseSeeder
 php artisan storage:link
