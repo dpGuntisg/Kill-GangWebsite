@@ -47,35 +47,27 @@ export default {
         this.errors.push('Password field must be filled');
       }
       if (this.errors.length === 0) {
-        fetch('api/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: this.email,
-            password: this.password,
-          }),
+        axios.post('api/login', {
+          email: this.email,
+          password: this.password,
         })
-          .then(response => {
-            if (response.status === 200) {
-              return response.json();
-            } else {
-              throw new Error('Failed to login');
-            }
-          })
-          .then(data => {
+        .then(response => {
+          if (response.status === 200) {
+            const data = response.data;
             if (data.status === true) {
               localStorage.setItem('userToken', data.token);
               this.$router.push({ name: 'home' });
             } else {
               this.loginError = data.message;
             }
-          })
-          .catch(error => {
-            console.log(error);
-            this.loginError = "Login failed: " + error.message;
-          });
+          } else {
+            throw new Error('Failed to login');
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          this.loginError = "Login failed: " + error.message;
+        });
       }
     }
   }
