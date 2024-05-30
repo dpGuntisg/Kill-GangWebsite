@@ -4,7 +4,7 @@
 
 - Laravel
 - Node.js
-- Vue.js + TypeScript
+- Vue.js 
 - MySQL
 
 ## Setup
