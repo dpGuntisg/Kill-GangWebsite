@@ -79,7 +79,7 @@ export default {
     async fetchYoutubeLink() {
       try {
         const token = localStorage.getItem('userToken');
-        const response = await axios.get('/youtube-link', {
+        const response = await axios.get('api/youtube-link', {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -113,7 +113,7 @@ export default {
     async updateYoutubeLink() {
       try {
         const token = localStorage.getItem('userToken');
-        await axios.put('/youtube-link', { youtubeLink: this.newYoutubeLink }, {
+        await axios.put('api/youtube-link', { youtubeLink: this.newYoutubeLink }, {
           headers: {
             Authorization: `Bearer ${token}`
           }

@@ -69,7 +69,7 @@ export default {
         }
       };
 
-      axios.post('/logout', null, config)
+      axios.post('api/logout', null, config)
         .then(response => {
           console.log('Logout successful:', response.data);
           localStorage.removeItem('userToken');
@@ -96,7 +96,7 @@ export default {
         }
       };
 
-      axios.delete('/delete', config)
+      axios.delete('api/delete', config)
         .then(response => {
           console.log("User deleted:", response.data);
           localStorage.removeItem('userToken');
@@ -116,7 +116,7 @@ export default {
         return;
       }
 
-      axios.get('/profile', {
+      axios.get('api/profile', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -165,7 +165,7 @@ export default {
         }
       };
 
-      axios.put('/profile', this.editForm, config)
+      axios.put('api/profile', this.editForm, config)
         .then(response => {
           console.log("User updated successfully:", response.data);
           this.user = response.data.data;

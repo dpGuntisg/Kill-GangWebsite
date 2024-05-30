@@ -83,7 +83,7 @@ export default {
     async fetchAwards() {
       try {
         const token = localStorage.getItem('userToken');
-        const response = await axios.get('/awards', {
+        const response = await axios.get('api/awards', {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -102,7 +102,7 @@ export default {
     async updateAward() {
       try {
         const token = localStorage.getItem('userToken');
-        await axios.put(`/awards/${this.selectedAward.id}`, this.selectedAward, {
+        await axios.put(`api/awards/${this.selectedAward.id}`, this.selectedAward, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -116,7 +116,7 @@ export default {
     async checkAdmin() {
       try {
         const token = localStorage.getItem('userToken');
-        const response = await axios.get('/profile', {
+        const response = await axios.get('api/profile', {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -130,12 +130,12 @@ export default {
       this.showAddAwardForm = !this.showAddAwardForm;
     },
     getImagePath(filepath) {
-      return `http://localhost:8000/${filepath}`;
+      return `https://api-12dggutmanis.kvalifikacija.rvt.lv/${filepath}`;
     },
     async addAward() {
       try {
         const token = localStorage.getItem('userToken');
-        await axios.post('/awards', this.newAward, {
+        await axios.post('api/awards', this.newAward, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -151,7 +151,7 @@ export default {
     async deleteAward(award) {
       try {
         const token = localStorage.getItem('userToken');
-        await axios.delete(`/awards/${award.id}`, {
+        await axios.delete(`api/awards/${award.id}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }

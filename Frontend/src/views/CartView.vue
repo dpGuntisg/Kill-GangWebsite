@@ -44,7 +44,7 @@ export default {
     async fetchCartItems() {
       try {
         const token = localStorage.getItem('userToken');
-        const response = await axios.get('/cart', {
+        const response = await axios.get('api/cart', {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -58,7 +58,7 @@ export default {
     async removeFromCart(productId) {
       try {
         const token = localStorage.getItem('userToken');
-        await axios.delete(`/cart/${productId}`, {
+        await axios.delete(`api/cart/${productId}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }

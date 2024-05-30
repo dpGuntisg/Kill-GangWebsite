@@ -93,7 +93,7 @@ export default {
     async fetchMembers() {
       try {
         const token = localStorage.getItem('userToken');
-        const response = await axios.get('/members', {
+        const response = await axios.get('api/members', {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -106,7 +106,7 @@ export default {
     async checkAdmin() {
       try {
         const token = localStorage.getItem('userToken');
-        const response = await axios.get('/profile', {
+        const response = await axios.get('api/profile', {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -122,7 +122,7 @@ export default {
     async addMember() {
       try {
         const token = localStorage.getItem('userToken');
-        await axios.post('/members', this.newMember, {
+        await axios.post('api/members', this.newMember, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -140,7 +140,7 @@ export default {
     async updateMember() {
       try {
         const token = localStorage.getItem('userToken');
-        await axios.put(`/members/${this.selectedMember.id}`, {
+        await axios.put(`api/members/${this.selectedMember.id}`, {
           name: this.selectedMember.name,
           description: this.selectedMember.description
         }, {
@@ -160,7 +160,7 @@ export default {
     async deleteMember(member) {
       try {
         const token = localStorage.getItem('userToken');
-        await axios.delete(`/members/${member.id}`, {
+        await axios.delete(`api/members/${member.id}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -171,7 +171,7 @@ export default {
       }
     },
     getImagePath(filepath) {
-      return `http://localhost:8000/${filepath}`;
+      return `https://api-12dggutmanis.kvalifikacija.rvt.lv/${filepath}`;
     },
     cancelAdd() {
       this.showAddMemberForm = false;

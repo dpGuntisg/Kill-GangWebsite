@@ -110,7 +110,7 @@ export default {
     async fetchProducts() {
       try {
         const token = localStorage.getItem('userToken');
-        const response = await axios.get('/products', {
+        const response = await axios.get('api/products', {
           headers: {
             Authorization: `Bearer ${token}`
           },
@@ -133,7 +133,7 @@ export default {
     async addToCart(product) {
       try {
         const token = localStorage.getItem('userToken');
-        await axios.post('/cart', { product_id: product.id, quantity: 1 }, {
+        await axios.post('api/cart', { product_id: product.id, quantity: 1 }, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -159,7 +159,7 @@ export default {
     async addProduct() {
       try {
         const token = localStorage.getItem('userToken');
-        await axios.post('/products', this.newProduct, {
+        await axios.post('api/products', this.newProduct, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -188,7 +188,7 @@ export default {
     async updateProduct() {
       try {
         const token = localStorage.getItem('userToken');
-        await axios.put(`/products/${this.selectedProduct.id}`, {
+        await axios.put(`api/products/${this.selectedProduct.id}`, {
           name: this.selectedProduct.name,
           description: this.selectedProduct.description,
           price: this.selectedProduct.price,
@@ -208,7 +208,7 @@ export default {
     async deleteProduct(product) {
       try {
         const token = localStorage.getItem('userToken');
-        await axios.delete(`/products/${product.id}`, {
+        await axios.delete(`api/products/${product.id}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -224,7 +224,7 @@ export default {
     async checkAdmin() {
       try {
         const token = localStorage.getItem('userToken');
-        const response = await axios.get('/profile', {
+        const response = await axios.get('api/profile', {
           headers: {
             Authorization: `Bearer ${token}`
           }
