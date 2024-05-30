@@ -97,7 +97,7 @@ export default {
     async checkAdmin() {
       try {
         const token = localStorage.getItem('userToken');
-        const response = await axios.get('/profile', {
+        const response = await axios.get('api/profile', {
           headers: {
             Authorization: `Bearer ${token}`
           }
