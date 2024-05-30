@@ -13,7 +13,7 @@
 
 Navigate to the Laravel backend directory:
 
-```bash
+```
 cd laravelBackend
 cp .env.example .env
 composer install
@@ -24,6 +24,7 @@ php artisan passport:client --personal
 php artisan storage:link
 composer require laravel/telescope --dev
 php artisan telescope:install
+```
 
 ### .env file configuration
 DB_CONNECTION=mysql
@@ -34,8 +35,10 @@ DB_USERNAME="db_user"
 DB_PASSWORD=
 
 ###Vue.js setup
+```
 cd frontend
 npm i
+```
 
 ###Additional Laravel Backend Setup
 php artisan db:seed --class=DatabaseSeeder
