@@ -192,7 +192,7 @@ export default {
           name: this.selectedProduct.name,
           description: this.selectedProduct.description,
           price: this.selectedProduct.price,
-          image_id: this.selectedProduct.image_id // Use existing image ID
+          image_id: this.selectedProduct.image_id 
         }, {
           headers: {
             Authorization: `Bearer ${token}`

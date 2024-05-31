@@ -88,7 +88,7 @@ export default {
         })
         .catch(error => {
           console.error('Error during logout:', error.response ? error.response.data : 'No response data');
-          this.$router.push('/');
+          this.$router.push('/login');
         });
     },
 
@@ -97,7 +97,7 @@ export default {
       if (!token) {
         console.error('Authentication token not found');
         alert('Please log in to delete your account.');
-        this.$router.push('/');
+        this.$router.push('/login');
         return;
       }
 
@@ -112,7 +112,7 @@ export default {
         .then(response => {
           console.log("User deleted:", response.data);
           localStorage.removeItem('userToken');
-          this.$router.push('/');
+          this.$router.push('/login');
         })
         .catch(error => {
           console.error('Error deleting user:', error.response ? error.response.data : 'No response data');
@@ -124,7 +124,7 @@ export default {
       const token = localStorage.getItem('userToken');
       if (!token) {
         console.error('Authentication token not found');
-        this.$router.push('/');
+        this.$router.push('/login');
         return;
       }
 
@@ -168,7 +168,7 @@ export default {
       if (!token) {
         console.error('Authentication token not found');
         alert('Please log in to edit your account.');
-        this.$router.push('/');
+        this.$router.push('/login');
         return;
       }
 
