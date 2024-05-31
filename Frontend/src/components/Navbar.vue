@@ -1,7 +1,7 @@
 <template>
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <div class="topnav" :class="{ 'responsive': isResponsive }" id="myTopnav">
-    <RouterLink to="/home">HOME</RouterLink>
+    <RouterLink to="/">HOME</RouterLink>
     <RouterLink to="/about">ABOUT US</RouterLink>
     <RouterLink to="/awards">AWARDS</RouterLink>
     <RouterLink to="/shop">SHOP</RouterLink>
