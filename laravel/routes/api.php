@@ -8,7 +8,7 @@ use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\AwardController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\Api\MemberController;
-use App\Http\Controllers\api\YoutubeLinkController;
+use App\Http\Controllers\Api\YoutubeLinkController;
 
 // Open Routes
 Route::post('register', [UserController::class, 'register']);
@@ -16,14 +16,13 @@ Route::post('login', [UserController::class, 'login']);
 
 // Product routes 
 Route::get('products', [ProductController::class, 'index']);
- // Awards routes
+// Awards routes
 Route::get('awards', [AwardController::class, 'index']);
 
- // Member routes
+// Member routes
 Route::get('members', [MemberController::class, 'index']);
- // Youtube/Home page routes
+// Youtube/Home page routes
 Route::get('/youtube-link', [YoutubeLinkController::class, 'getYoutubeLink']);
-    
 
 // Protected Routes for Admin
 Route::group(['middleware' => ['auth:api', 'CheckRole:admin']], function () {
@@ -46,12 +45,13 @@ Route::group(['middleware' => ['auth:api', 'CheckRole:admin']], function () {
     Route::delete('products/{id}', [ProductController::class, 'destroy']);
 
     // Youtube/Home page routes
-    Route::put('/youtube-link', [YoutubeLinkController::class, 'updateYoutubeLink'])->middleware('auth:api');
+    Route::put('/youtube-link', [YoutubeLinkController::class, 'updateYoutubeLink']);
 
-    //settings page routes
+    // Settings page routes
     Route::get('users', [UserController::class, 'index']);
     Route::delete('users/{id}', [UserController::class, 'destroy']);
     Route::get('product-stats', [ProductController::class, 'getProductStats']);
+    
 });
 
 // Protected Routes for Authenticated Users
@@ -62,13 +62,10 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::put('profile', [UserController::class, 'update']);
     Route::post('logout', [UserController::class, 'logout']);
 
-
-    
     // Cart routes
     Route::post('cart', [CartController::class, 'addToCart']);
     Route::get('cart', [CartController::class, 'getCartItems']);
     Route::delete('cart/{id}', [CartController::class, 'removeFromCart']);
     Route::get('cart/total', [CartController::class, 'getTotal']);
-
-
+    
 });
