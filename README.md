@@ -1,20 +1,29 @@
-Labdien mani sauc es nezinu vairs man nav laika man japrogrammeee
 
-# Kill Gang
 
-## Steks
+# DP3-2 Guntis Gūtmanis
+
+# Officiālā Kill Gang vietne
+
+Orģināli bija domāts uztaisīt vietni, kur visu var rediģēt bez programmēšanas, pagaidām ir tikai 0.01 versija tam, šī vietne ir uztaisīta lai parādītu, kā varētu izskatīties gala rezultāts, ja izdotos uztaisīt plānoto.
+
+Funkcijas:
+
+Lietotāji, var reģistrēties, skatīt vietni, pievienot produktus grozā.
+Administratori, var mainīt home page youtube video url, un pārējas lapās pievienot, rediģēt vai dzēst ierakstus.
+Administratoram pieejama statistika un panelis ar visiem lietotājiem.
+
+### Stack
 
 - Laravel
 - Node.js
 - Vue.js 
 - MySQL
 
-## Setaps
+## Setup
 
-### Laravel Pēcpuses Setaps
+### Laravel Backend Setup
 
-Dodies Uz Laravel Pēcpuses direktoriju:      
-es neesmu gulejis
+Dodies Uz Laravel Backend direktoriju:      
 
 ```
 cd laravel
@@ -39,15 +48,25 @@ DB_USERNAME="db_user"
 DB_PASSWORD=
 ```
 
-### Vū džei s setaps
+### FrontEnd Setup
 ```
 cd frontend
 npm i
 ```
 
-### Adicionāla Laravel Pēcpuses Setaps
+### Adicionāla Laravel Backend Setup
 ```
 php artisan db:seed --class=DatabaseSeeder
-php artisan storage:link
+
 ```
 
+### Lai palaistu FrontEnd
+```
+cd FrontEnd
+npm run dev
+```
+### Lai palaistu Backend
+```
+cd laravel
+php artisan serve
+```
