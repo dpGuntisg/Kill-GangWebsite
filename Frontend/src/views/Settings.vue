@@ -122,7 +122,7 @@ export default {
         }
       };
 
-      axios.post('return `https://api-12dggutmanis.kvalifikacija.rvt.lv/api/logout', null, config)
+      axios.post('api/logout', null, config)
         .then(response => {
           console.log('Logout successful:', response.data);
           localStorage.removeItem('userToken');
@@ -149,7 +149,7 @@ export default {
         }
       };
 
-      axios.delete('http://127.0.0.1:8000/api/profile', config)
+      axios.delete('/api/profile', config)
         .then(response => {
           console.log("User deleted:", response.data);
           localStorage.removeItem('userToken');
@@ -165,11 +165,10 @@ export default {
       const token = localStorage.getItem('userToken');
       if (!token) {
         console.error('Authentication token not found');
-        this.$router.push('/login');
         return;
       }
 
-      axios.get('http://127.0.0.1:8000/api/profile', {
+      axios.get('/api/profile', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -187,7 +186,7 @@ export default {
 
     fetchAllUsers() {
       const token = localStorage.getItem('userToken');
-      axios.get('http://127.0.0.1:8000/api/users', {
+      axios.get('/api/users', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -202,7 +201,7 @@ export default {
 
     fetchProductStats() {
       const token = localStorage.getItem('userToken');
-      axios.get('http://127.0.0.1:8000/api/product-stats', {
+      axios.get('api/product-stats', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -217,7 +216,7 @@ export default {
 
     deleteUserById(userId) {
       const token = localStorage.getItem('userToken');
-      axios.delete(`http://127.0.0.1:8000/api/users/${userId}`, {
+      axios.delete(`api/users/${userId}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -267,7 +266,7 @@ export default {
         }
       };
 
-      axios.put('http://127.0.0.1:8000/api/profile', this.editForm, config)
+      axios.put('api/profile', this.editForm, config)
         .then(response => {
           console.log("User updated successfully:", response.data);
           this.user = response.data.data;
@@ -281,11 +280,9 @@ export default {
 
     checkAuthentication() {
       const token = localStorage.getItem('userToken');
-      if (token) {
-        this.isAuthenticated = true;
+      this.isAuthenticated = !!token;
+      if (this.isAuthenticated) {
         this.fetchUserProfile();
-      } else {
-        this.isAuthenticated = false;
       }
     }
   }
