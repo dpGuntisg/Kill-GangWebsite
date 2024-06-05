@@ -136,4 +136,16 @@ class UserController extends Controller
             'data' => $user
         ]);
     }
+
+    public function index()
+    {
+    $users = User::all();
+    return response()->json($users, 200);
+    }
+    public function destroy($id)
+    {
+    $user = User::findOrFail($id);
+    $user->delete();
+    return response()->json(['message' => 'User deleted successfully!'], 200);
+    }
 }

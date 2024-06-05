@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
-
+use App\Models\Cart;
 
 class ProductController extends Controller
 {
@@ -95,5 +95,16 @@ class ProductController extends Controller
                 'message' => $e->getMessage()
             ], 500);
         }
+    }
+
+    public function getProductStats()
+    {
+        $stats = Cart::join('products', 'carts.product_id', '=', 'products.id')
+            ->selectRaw('products.id as productId, products.name as productName, SUM(carts.quantity) as timesAdded')
+            ->groupBy('products.id', 'products.name')
+            ->orderByDesc('timesAdded')
+            ->get();
+    
+        return response()->json($stats, 200);
     }
 }

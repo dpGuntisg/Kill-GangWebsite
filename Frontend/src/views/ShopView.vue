@@ -48,10 +48,12 @@
             <h2>{{ product.name }}</h2>
             <p class="price">{{ formatCurrency(product.price) }}</p>
             <p class="description">{{ product.description }}</p>
-            <button v-if="!selectedProduct" class="addToCart-btn" @click="addToCart(product)">Add to Cart</button>
-            <div v-if="isAdmin && !selectedProduct" class="admin-buttons">
-              <button class="editButton" @click="editProduct(product)">Edit</button>
-              <button class="deleteButton" @click="deleteProduct(product)">Delete</button>
+            <div class="actions">
+              <button v-if="!selectedProduct" class="addToCart-btn" @click="addToCart(product)">Add to Cart</button>
+              <div v-if="isAdmin && !selectedProduct" class="admin-buttons">
+                <button class="editButton" @click="editProduct(product)">Edit</button>
+                <button class="deleteButton" @click="deleteProduct(product)">Delete</button>
+              </div>
             </div>
           </article>
           <form v-if="selectedProduct && selectedProduct.id === product.id" class="edit-form" @submit.prevent="updateProduct">
@@ -69,7 +71,6 @@
     </main>
   </div>
 </template>
-
 
 
 
@@ -432,11 +433,21 @@ select {
   left: 0;
 }
 
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 1%;
+  margin-bottom: 15%;
+}
+
 .admin-buttons {
   display: flex;
   justify-content: space-between;
+  width: 100%;
+  padding: 5px;
   margin-top: 10px;
-  margin-bottom: 40px; 
 }
 
 .admin-buttons button {

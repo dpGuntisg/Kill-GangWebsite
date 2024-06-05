@@ -46,8 +46,12 @@ Route::group(['middleware' => ['auth:api', 'CheckRole:admin']], function () {
     Route::delete('products/{id}', [ProductController::class, 'destroy']);
 
     // Youtube/Home page routes
-
     Route::put('/youtube-link', [YoutubeLinkController::class, 'updateYoutubeLink'])->middleware('auth:api');
+
+    //settings page routes
+    Route::get('users', [UserController::class, 'index']);
+    Route::delete('users/{id}', [UserController::class, 'destroy']);
+    Route::get('product-stats', [ProductController::class, 'getProductStats']);
 });
 
 // Protected Routes for Authenticated Users

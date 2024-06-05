@@ -81,7 +81,12 @@ export default {
   methods: {
     async fetchAwards() {
       try {
-        const response = await axios.get('api/awards');
+        const token = localStorage.getItem('userToken');
+        const response = await axios.get('api/awards', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
         this.awards = response.data;
       } catch (error) {
         console.error('Error fetching awards:', error);
@@ -95,7 +100,12 @@ export default {
     },
     async updateAward() {
       try {
-        await axios.put(`api/awards/${this.selectedAward.id}`, this.selectedAward);
+        const token = localStorage.getItem('userToken');
+        await axios.put(`api/awards/${this.selectedAward.id}`, this.selectedAward, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
         this.fetchAwards();
         this.selectedAward = null;
       } catch (error) {
@@ -104,7 +114,12 @@ export default {
     },
     async checkAdmin() {
       try {
-        const response = await axios.get('api/profile');
+        const token = localStorage.getItem('userToken');
+        const response = await axios.get('api/profile', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
         this.isAdmin = response.data.data.role === 'admin';
       } catch (error) {
         console.error('Error checking admin role:', error);
@@ -113,15 +128,17 @@ export default {
     toggleAddAwardForm() {
       this.showAddAwardForm = !this.showAddAwardForm;
     },
-        //getImagePath(filepath) {
-    //  return `https://api-12dggutmanis.kvalifikacija.rvt.lv/${filepath}`;
-    //},
     getImagePath(filepath) {
       return `http://127.0.0.1:8000/${filepath}`;
     },
     async addAward() {
       try {
-        await axios.post('api/awards', this.newAward);
+        const token = localStorage.getItem('userToken');
+        await axios.post('api/awards', this.newAward, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
         this.fetchAwards();
         this.newAward = { name: '', date: '', description: '' };
         this.showAddAwardForm = false;
@@ -131,19 +148,25 @@ export default {
     },
     async deleteAward(award) {
       try {
-        await axios.delete(`api/awards/${award.id}`);
-        this.fetchAwards(); 
+        const token = localStorage.getItem('userToken');
+        await axios.delete(`api/awards/${award.id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        this.fetchAwards();
       } catch (error) {
         console.error('Error deleting award:', error);
       }
     },
     cancelAdd() {
-      this.newAward = { name: '', date: '', description: '' }; 
-      this.showAddAwardForm = false; 
+      this.newAward = { name: '', date: '', description: '' };
+      this.showAddAwardForm = false;
     },
   }
 };
 </script>
+
 
 
 
@@ -158,6 +181,7 @@ export default {
   margin: 0 auto;
   border-radius: 8px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  height: 100vh;
 }
 
 .award {

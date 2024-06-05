@@ -5,7 +5,7 @@
       <div class="user-info" v-if="user">
         <p> EMAIL: {{ user.email }}</p>
         <p> NAME: {{ user.name }} </p>
-        <p> ROLE: {{ user.role.toUpperCase() }}</p>
+        <p> ROLE: {{ user.role.toUpperCase() }} </p>
         <p> CREATED AT: {{ formatDate(user.created_at) }}</p>
       </div>
 
@@ -29,28 +29,72 @@
           <button type="button" @click="cancelEdit">Cancel</button>
         </form>
       </div>
+
+      <div v-if="user.role === 'admin'" class="admin-panel">
+        <h2>Admin Panel</h2>
+        <div class="users-section">
+          <h3>Users</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="user in users" :key="user.id">
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.role }}</td>
+                <td>
+                  <button @click="deleteUserById(user.id)">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="statistics-section">
+          <h3>Product Statistics</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Product Name</th>
+                <th>Times Added to Cart</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="stat in productStats" :key="stat.productId">
+                <td>{{ stat.productName }}</td>
+                <td>{{ stat.timesAdded }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
     <div v-else>
       <p>Please log in to view your profile.</p>
-      <button @click="$router.push('/')" class="login-btn">LOG IN</button>
+      <button @click="$router.push('/login')" class="login-btn">LOG IN</button>
     </div>
   </div>
 </template>
-
-
 
 <script>
 import Navbar from '../components/Navbar.vue';
 import axios from 'axios';
 
 export default {
-  name: "profile",
+  name: "Profile",
   components: {
     Navbar,
   },
   data() {
     return {
       user: null,
+      users: [],
+      productStats: [],
       editing: false,
       isAuthenticated: false,
       editForm: {
@@ -78,13 +122,11 @@ export default {
         }
       };
 
-      //axios.post('https://api-12dggutmanis.kvalifikacija.rvt.lv/api/logout', null, config)
-    axios.post('http://127.0.0.1:8000/api/profile/logout', null, config) 
-      
+      axios.post('http://127.0.0.1:8000/api/logout', null, config)
         .then(response => {
           console.log('Logout successful:', response.data);
           localStorage.removeItem('userToken');
-          this.$router.push('/');
+          this.$router.push('/login');
         })
         .catch(error => {
           console.error('Error during logout:', error.response ? error.response.data : 'No response data');
@@ -107,7 +149,6 @@ export default {
         }
       };
 
-      //axios.delete('https://api-12dggutmanis.kvalifikacija.rvt.lv/api/delete', config)
       axios.delete('http://127.0.0.1:8000/api/profile', config)
         .then(response => {
           console.log("User deleted:", response.data);
@@ -128,8 +169,7 @@ export default {
         return;
       }
 
-      //axios.get('https://api-12dggutmanis.kvalifikacija.rvt.lv/api/profile', {
-        axios.get('http://127.0.0.1:8000/api/profile', {
+      axios.get('http://127.0.0.1:8000/api/profile', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -137,9 +177,58 @@ export default {
         .then(response => {
           this.user = response.data.data;
           console.log('User data fetched successfully:', this.user);
+          this.fetchAllUsers();
+          this.fetchProductStats();
         })
         .catch(error => {
           console.error('Failed to fetch user data:', error);
+        });
+    },
+
+    fetchAllUsers() {
+      const token = localStorage.getItem('userToken');
+      axios.get('http://127.0.0.1:8000/api/users', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        })
+        .then(response => {
+          this.users = response.data;
+        })
+        .catch(error => {
+          console.error('Failed to fetch users:', error);
+        });
+    },
+
+    fetchProductStats() {
+      const token = localStorage.getItem('userToken');
+      axios.get('http://127.0.0.1:8000/api/product-stats', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        })
+        .then(response => {
+          this.productStats = response.data;
+        })
+        .catch(error => {
+          console.error('Failed to fetch product stats:', error);
+        });
+    },
+
+    deleteUserById(userId) {
+      const token = localStorage.getItem('userToken');
+      axios.delete(`http://127.0.0.1:8000/api/users/${userId}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        })
+        .then(response => {
+          console.log("User deleted:", response.data);
+          this.fetchAllUsers();
+        })
+        .catch(error => {
+          console.error('Error deleting user:', error);
+          alert('Failed to delete user.');
         });
     },
 
@@ -178,7 +267,6 @@ export default {
         }
       };
 
-      //axios.put('https://api-12dggutmanis.kvalifikacija.rvt.lv/api/profile', this.editForm, config)
       axios.put('http://127.0.0.1:8000/api/profile', this.editForm, config)
         .then(response => {
           console.log("User updated successfully:", response.data);
@@ -229,6 +317,26 @@ button{
   display: flex;
 }
 
+.admin-panel {
+  margin-top: 20px;
+}
+
+.users-section,
+.statistics-section {
+  margin-top: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th,
+table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
 @media screen and (max-width: 768px) {
     .content {
       width: 100%;
@@ -238,7 +346,6 @@ button{
       margin-right: 0;
       background: none;
     }
-  }
+}
 
 </style>
-
