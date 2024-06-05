@@ -122,7 +122,7 @@ export default {
         }
       };
 
-      axios.post('http://127.0.0.1:8000/api/logout', null, config)
+      axios.post('return `https://api-12dggutmanis.kvalifikacija.rvt.lv/api/logout', null, config)
         .then(response => {
           console.log('Logout successful:', response.data);
           localStorage.removeItem('userToken');

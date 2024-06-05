@@ -170,11 +170,8 @@ export default {
         console.error('Error deleting member:', error);
       }
     },
-    //getImagePath(filepath) {
-    //  return `https://api-12dggutmanis.kvalifikacija.rvt.lv/${filepath}`;
-    //},
     getImagePath(filepath) {
-      return `http://127.0.0.1:8000/${filepath}`;
+      return `https://api-12dggutmanis.kvalifikacija.rvt.lv/${filepath}`;
     },
     cancelAdd() {
       this.showAddMemberForm = false;

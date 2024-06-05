@@ -78,8 +78,7 @@ export default {
   methods: {
     async fetchYoutubeLink() {
       try {
-        //const response = await axios.get('https://api-12dggutmanis.kvalifikacija.rvt.lv/api/youtube-link');
-        const response = await axios.get('http://127.0.0.1:8000/api/youtube-link');
+        const response = await axios.get('https://api-12dggutmanis.kvalifikacija.rvt.lv/api/youtube-link');
         this.youtubeLink = response.data.youtubeLink;
         this.youtubeEmbedUrl = this.getEmbedUrl(this.youtubeLink);
         this.thumbnailUrl = this.getThumbnailUrl(this.youtubeLink);
@@ -91,8 +90,7 @@ export default {
       try {
         const token = localStorage.getItem('userToken');
         if (token) {
-          //const response = await axios.get('https://api-12dggutmanis.kvalifikacija.rvt.lv/api/profile', {
-            const response = await axios.get('http://127.0.0.1:8000/api/profile', {
+          const response = await axios.get('https://api-12dggutmanis.kvalifikacija.rvt.lv/api/profile', {
             headers: {
               Authorization: `Bearer ${token}`
             }
@@ -106,8 +104,7 @@ export default {
     async updateYoutubeLink() {
       try {
         const token = localStorage.getItem('userToken');
-        //await axios.put('https://api-12dggutmanis.kvalifikacija.rvt.lv/api/youtube-link', { youtubeLink: this.newYoutubeLink }, {
-        await axios.put('http://127.0.0.1:8000/api/youtube-link', { youtubeLink: this.newYoutubeLink }, {
+        await axios.put('return `https://api-12dggutmanis.kvalifikacija.rvt.lv/api/youtube-link', { youtubeLink: this.newYoutubeLink }, {
           headers: {
             Authorization: `Bearer ${token}`
           }

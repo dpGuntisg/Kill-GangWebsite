@@ -11,9 +11,9 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import axios from 'axios';
 
-//axios.defaults.baseURL = 'https://api-12dggutmanis.kvalifikacija.rvt.lv/';
+axios.defaults.baseURL = 'https://api-12dggutmanis.kvalifikacija.rvt.lv/';
 
-axios.defaults.baseURL = 'http://127.0.0.1:8000/';
+//axios.defaults.baseURL = 'http://127.0.0.1:8000/';
 
 library.add(faBars, faTimes)
 
