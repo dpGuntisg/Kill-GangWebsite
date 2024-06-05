@@ -24,7 +24,7 @@
         <div v-if="registrationError" class="error-message">{{ registrationError }}</div>
       </div>
       <div class="button-container">
-        <RouterLink to="/">
+        <RouterLink to="/login">
           <button type="button" class="login-btn">LOGIN</button>
         </RouterLink>
         <button type="submit" class="signup-btn">SIGN UP</button>
@@ -77,7 +77,7 @@ export default {
           password_confirmation: this.passwordConfirmation,
         })
           .then(response => {
-            this.$router.push({ name: 'login' });
+            this.$router.push('/login');
           })
           .catch(error => {
             this.registrationError = error.response.data.message || 'Something went wrong';
