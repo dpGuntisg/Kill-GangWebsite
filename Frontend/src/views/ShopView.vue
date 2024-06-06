@@ -184,7 +184,7 @@ export default {
       this.showAddProductForm = !this.showAddProductForm;
     },
     editProduct(product) {
-      this.selectedProduct = { ...product, newImage: null }; // Initialize newImage field to null
+      this.selectedProduct = { ...product, newImage: null }; 
     },
     async updateProduct() {
       try {

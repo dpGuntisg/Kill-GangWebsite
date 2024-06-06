@@ -129,7 +129,7 @@ export default {
       this.showAddAwardForm = !this.showAddAwardForm;
     },
     getImagePath(filepath) {
-      return `https://api-12dggutmanis.kvalifikacija.rvt.lv/${filepath}`;
+      return `http://127.0.0.1:8000/${filepath}`;
     },
     async addAward() {
       try {
