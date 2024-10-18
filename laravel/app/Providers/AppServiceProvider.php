@@ -12,4 +12,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Route::aliasMiddleware('role', CheckRole::class);
     }
+
+    
 }

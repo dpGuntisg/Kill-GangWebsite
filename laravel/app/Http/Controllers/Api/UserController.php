@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -14,19 +15,24 @@ class UserController extends Controller
     public function register(Request $request){
 
         // Data validation
-        $request->validate([
-            "name" => "required",
-            "email" => "required|email|unique:users",
-            "password" => "required|confirmed"
+        $validatedData = $request->validate([
+            "name" => "required|string|min:3|max:255|regex:/^[a-zA-Z\s]+$/",
+            "email" => "required|email|unique:users|max:255",
+            "password" => "required|string|min:8|confirmed|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/"
+        ], [
+            'name.regex' => 'Name can only contain letters and spaces.',
+            'password.regex' => 'Password must include at least one uppercase letter, one lowercase letter, and one number.'
         ]);
 
         // Create User
         User::create([
-            "name" => $request->name,
-            "email" => $request->email,
-            "password" => Hash::make($request->password),
+            "name" => htmlspecialchars($validatedData['name']),
+            "email" => htmlspecialchars($validatedData['email']),
+            "password" => Hash::make($validatedData['password']),
             "role" => "user" // Default role is 'user'
         ]);
+
+        Log::info('User registered', ['email' => $request->email]);
 
         return response()->json([
             "status" => true,
@@ -53,6 +59,8 @@ class UserController extends Controller
             $user = Auth::user();
 
             $token = $user->createToken("userToken")->accessToken;
+
+            Log::info('User registered', ['email' => $request->email]);
 
             return response()->json([
                 "status" => true,

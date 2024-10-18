@@ -11,8 +11,8 @@ use App\Http\Controllers\Api\MemberController;
 use App\Http\Controllers\Api\YoutubeLinkController;
 
 // Open Routes
-Route::post('register', [UserController::class, 'register']);
-Route::post('login', [UserController::class, 'login']);
+Route::post('register', [UserController::class, 'register'])->middleware('throttle:10,1');
+Route::post('login', [UserController::class, 'login'])->middleware('throttle:10,1');
 
 // Product routes 
 Route::get('products', [ProductController::class, 'index']);
@@ -25,7 +25,7 @@ Route::get('members', [MemberController::class, 'index']);
 Route::get('/youtube-link', [YoutubeLinkController::class, 'getYoutubeLink']);
 
 // Protected Routes for Admin
-Route::group(['middleware' => ['auth:api', 'CheckRole:admin']], function () {
+Route::group(['middleware' => ['auth:api', 'CheckRole:admin', 'throttle:60,1']], function () {
     // Image upload
     Route::post('/upload', [ImageController::class, 'upload']);
     
@@ -55,7 +55,7 @@ Route::group(['middleware' => ['auth:api', 'CheckRole:admin']], function () {
 });
 
 // Protected Routes for Authenticated Users
-Route::group(['middleware' => ['auth:api']], function () {
+Route::group(['middleware' => ['auth:api' ,'throttle:60,1']], function () {
     // User routes
     Route::delete('delete', [UserController::class, 'delete']);
     Route::get('profile', [UserController::class, 'profile']);
